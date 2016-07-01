@@ -10,9 +10,9 @@ var currentScene: objects.Scene;
 var scene: number;
 
 // Game Scenes
-var intro: scenes.Intro;
-var leftCave: scenes.LeftCave;
-var rightCave: scenes.RightCave;
+var menu: scenes.Menu;
+var slotmachine: scenes.SlotMachine;
+var gameover: scenes.GameOver;
 
 var assetData: objects.Asset[] = [
     { id: "BackButton", src: "../../Assets/images/BackButton.png" },
@@ -48,7 +48,7 @@ function init(): void {
     setupStats();
 
     // set initial scene
-    scene = config.Scene.INTRO;
+    scene = config.Scene.MENU;
     changeScene();
 }
 
@@ -82,26 +82,26 @@ function changeScene(): void {
 
     // Launch various scenes
     switch (scene) {
-        case config.Scene.INTRO:
+        case config.Scene.MENU:
             // show the MENU scene
             stage.removeAllChildren();
-            intro = new scenes.Intro();
-            currentScene = intro;
-            console.log("Starting INTRO Scene");
+            menu = new scenes.Menu();
+            currentScene = menu;
+            console.log("Starting MENU Scene");
             break;
-        case config.Scene.LEFT_CAVE:
-            // show the PLAY scene
+        case config.Scene.SLOT_MACHINE:
+            // show the SLOT_MACHINE scene
             stage.removeAllChildren();
-            leftCave = new scenes.LeftCave();
-            currentScene = leftCave;
-            console.log("Starting LEFT_CAVE Scene");
+            slotmachine = new scenes.SlotMachine();
+            currentScene = slotmachine;
+            console.log("Starting SLOT_MACHINE Scene");
             break;
-        case config.Scene.RIGHT_CAVE:
-            // show the game OVER scene
+        case config.Scene.GAME_OVER:
+            // show the GAME_OVER scene
             stage.removeAllChildren();
-            rightCave = new scenes.RightCave();
-            currentScene = rightCave;
-            console.log("Starting RIGHT_CAVE Scene");
+            gameover = new scenes.GameOver();
+            currentScene = gameover;
+            console.log("Starting GAME_OVER Scene");
             break;
     }
 
