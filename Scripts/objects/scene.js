@@ -20,6 +20,19 @@ var objects;
         // update game objects in my scene
         Scene.prototype.update = function () {
         };
+        // Setup Background
+        Scene.prototype._setupBackground = function (background) {
+            this._background = new createjs.Bitmap(assets.getResult(background));
+            this.addChild(this._background);
+        };
+        // FadeIn method
+        Scene.prototype._fadeIn = function (transitionTime) {
+            createjs.Tween.get(this._background).to({ alpha: 0 }, transitionTime, createjs.Ease.getPowInOut(2));
+        };
+        // FadeOut method
+        Scene.prototype._fadeOut = function (transitionTime, callback) {
+            createjs.Tween.get(this._background).to({ alpha: 0 }, transitionTime, createjs.Ease.getPowInOut(2)).call(callback);
+        };
         return Scene;
     }(createjs.Container));
     objects.Scene = Scene;

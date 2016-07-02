@@ -20,7 +20,8 @@ var assetData = [
     { id: "Bet1Button", src: "../../Assets/images/Bet1Button.png" },
     { id: "Bet10Button", src: "../../Assets/images/Bet10Button.png" },
     { id: "Bet100Button", src: "../../Assets/images/Bet100Button.png" },
-    { id: "SpinButton", src: "../../Assets/images/SpinButton.png" }
+    { id: "SpinButton", src: "../../Assets/images/SpinButton.png" },
+    { id: "WhiteBackground", src: "../../Assets/images/WhiteBackground.png" },
 ];
 // Preloads all SpinButtonSpinButtonhe assets required for the game before initiallizing the game
 function preload() {
@@ -94,4 +95,5 @@ function changeScene() {
     }
     console.log(currentScene.numChildren);
 }
+window.onload = preload;
 //# sourceMappingURL=game.js.map

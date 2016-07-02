@@ -34,6 +34,12 @@ module scenes {
             // START Button event listener
             this._startButton.on("click", this._startButtonClick, this);
 
+            // Setup Background
+            this._setupBackground("WhiteBackground");
+
+            // FadeIn - 500 milliseconds
+            this._fadeIn(500);
+
             // add this scene to the global stage container
             stage.addChild(this);
         }
@@ -48,9 +54,12 @@ module scenes {
 
         // START Button click event handler
         private _startButtonClick(event: createjs.MouseEvent) {
-            // Switch to the SLOT_MACHINE Scene
-            scene = config.Scene.SLOT_MACHINE;
-            changeScene();
+            // FadeOut
+            this._fadeOut(500, () => {
+                // Switch to the SLOT_MACHINE Scene
+                scene = config.Scene.SLOT_MACHINE;
+                changeScene();
+            });
         }
     }
 }
