@@ -16,9 +16,13 @@ var assetData = [
     { id: "NextButton", src: "../../Assets/images/NextButton.png" },
     { id: "StartButton", src: "../../Assets/images/StartButton.png" },
     { id: "StartOverButton", src: "../../Assets/images/StartOverButton.png" },
-    { id: "SlotMachine", src: "../../Assets/images/SlotMachine.png" }
+    { id: "SlotMachine", src: "../../Assets/images/SlotMachine.png" },
+    { id: "Bet1Button", src: "../../Assets/images/Bet1Button.png" },
+    { id: "Bet10Button", src: "../../Assets/images/Bet10Button.png" },
+    { id: "Bet100Button", src: "../../Assets/images/Bet100Button.png" },
+    { id: "SpinButton", src: "../../Assets/images/SpinButton.png" }
 ];
-// Preloads all the assets required for the game before initiallizing the game
+// Preloads all SpinButtonSpinButtonhe assets required for the game before initiallizing the game
 function preload() {
     assets = new createjs.LoadQueue();
     assets.installPlugin(createjs.Sound);
