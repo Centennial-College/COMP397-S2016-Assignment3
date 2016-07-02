@@ -10,12 +10,14 @@ var scene;
 var menu;
 var slotmachine;
 var gameover;
+// array of asset objects which contains all assets to be preloaded 
 var assetData = [
     { id: "BackButton", src: "../../Assets/images/BackButton.png" },
     { id: "NextButton", src: "../../Assets/images/NextButton.png" },
     { id: "StartButton", src: "../../Assets/images/StartButton.png" },
     { id: "StartOverButton", src: "../../Assets/images/StartOverButton.png" }
 ];
+// Preloads all the assets required for the game before initiallizing the game
 function preload() {
     assets = new createjs.LoadQueue();
     assets.installPlugin(createjs.Sound);
