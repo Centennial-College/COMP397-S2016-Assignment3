@@ -25,7 +25,15 @@ var assetData: objects.Asset[] = [
     { id: "Bet10Button", src: "../../Assets/images/Bet10Button.png" },
     { id: "Bet100Button", src: "../../Assets/images/Bet100Button.png" },
     { id: "SpinButton", src: "../../Assets/images/SpinButton.png" },
-    { id: "WhiteBackground", src: "../../Assets/images/WhiteBackground.png" },    
+    { id: "WhiteBackground", src: "../../Assets/images/WhiteBackground.png" },
+    { id: "Blank", src: "../../Assets/images/Blank.png" },
+    { id: "Grapes", src: "../../Assets/images/Grapes.png" },
+    { id: "Banana", src: "../../Assets/images/Banana.png" },
+    { id: "Orange", src: "../../Assets/images/Orange.png" },
+    { id: "Cherry", src: "../../Assets/images/Cherry.png" },
+    { id: "Bar", src: "../../Assets/images/Bar.png" },
+    { id: "Bell", src: "../../Assets/images/Bell.png" },
+    { id: "Seven", src: "../../Assets/images/Seven.png" }
 ];
 
 // Preloads all SpinButtonSpinButtonhe assets required for the game before initiallizing the game

@@ -7,6 +7,7 @@ module scenes {
         private _bet10Button: objects.Button;
         private _bet100Button: objects.Button;
         private _spinButton: objects.Button;
+        private _reels: createjs.Bitmap[];
 
         private _grapes = 0;
         private _bananas = 0;
@@ -50,6 +51,16 @@ module scenes {
             this.addChild(this._spinButton);
             this._spinButton.on("click", this._spinButtonClick, this);
 
+            // Initialize Array of Bitmaps
+            this._reels = new Array<createjs.Bitmap>();
+            for (var reel: number = 0; reel < 3; reel++) {
+                this._reels[reel] = new createjs.Bitmap(assets.getResult("Blank"));
+                this._reels[reel].x = 229 + (reel * 82);
+                this._reels[reel].y = 232;
+                this.addChild(this._reels[reel]);
+                console.log("reel" + reel + " " + this._reels[reel]);
+            }
+
             // Setup Background
             this._setupBackground("WhiteBackground");
 
@@ -73,7 +84,7 @@ module scenes {
 
         /* When this function is called it determines the betLine results.
         e.g. Bar - Orange - Banana */
-        private _reels(): string[] {
+        private _spinReels(): string[] {
             var betLine = [" ", " ", " "];
             var outCome = [0, 0, 0];
 
@@ -81,7 +92,7 @@ module scenes {
                 outCome[spin] = Math.floor((Math.random() * 65) + 1);
                 switch (outCome[spin]) {
                     case this._checkRange(outCome[spin], 1, 27):  // 41.5% probability
-                        betLine[spin] = "blank";
+                        betLine[spin] = "Blank";
                         this._blanks++;
                         break;
                     case this._checkRange(outCome[spin], 28, 37): // 15.4% probability
@@ -131,8 +142,11 @@ module scenes {
         }
 
         private _spinButtonClick(event: createjs.MouseEvent): void {
-            console.log('Spin those wheels!');
-            console.log(this._reels());
+            var bitmap: string[] = this._spinReels();
+
+            for (var reel: number = 0; reel < 3; reel++) {
+                this._reels[reel].image = assets.getResult(bitmap[reel]);
+            }
         }
     }
 }

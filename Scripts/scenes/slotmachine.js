@@ -42,6 +42,15 @@ var scenes;
             this._spinButton = new objects.Button("SpinButton", 412, 385, false);
             this.addChild(this._spinButton);
             this._spinButton.on("click", this._spinButtonClick, this);
+            // Initialize Array of Bitmaps
+            this._reels = new Array();
+            for (var reel = 0; reel < 3; reel++) {
+                this._reels[reel] = new createjs.Bitmap(assets.getResult("Blank"));
+                this._reels[reel].x = 229 + (reel * 82);
+                this._reels[reel].y = 232;
+                this.addChild(this._reels[reel]);
+                console.log("reel" + reel + " " + this._reels[reel]);
+            }
             // Setup Background
             this._setupBackground("WhiteBackground");
             // FadeIn - 500 milliseconds
@@ -59,14 +68,14 @@ var scenes;
         };
         /* When this function is called it determines the betLine results.
         e.g. Bar - Orange - Banana */
-        SlotMachine.prototype._reels = function () {
+        SlotMachine.prototype._spinReels = function () {
             var betLine = [" ", " ", " "];
             var outCome = [0, 0, 0];
             for (var spin = 0; spin < 3; spin++) {
                 outCome[spin] = Math.floor((Math.random() * 65) + 1);
                 switch (outCome[spin]) {
                     case this._checkRange(outCome[spin], 1, 27):
-                        betLine[spin] = "blank";
+                        betLine[spin] = "Blank";
                         this._blanks++;
                         break;
                     case this._checkRange(outCome[spin], 28, 37):
@@ -112,8 +121,10 @@ var scenes;
             console.log('Bet 100 Credit');
         };
         SlotMachine.prototype._spinButtonClick = function (event) {
-            console.log('Spin those wheels!');
-            console.log(this._reels());
+            var bitmap = this._spinReels();
+            for (var reel = 0; reel < 3; reel++) {
+                this._reels[reel].image = assets.getResult(bitmap[reel]);
+            }
         };
         return SlotMachine;
     }(objects.Scene));
