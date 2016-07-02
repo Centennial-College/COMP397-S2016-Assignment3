@@ -23,6 +23,8 @@ var scenes;
         // PUBLIC METHODS +++++++++++++++++++++
         // Start Method
         SlotMachine.prototype.start = function () {
+            // Reset the Game to initialize values
+            this._resetAll();
             // add background image to the scene
             this._backgroundImage = new createjs.Bitmap(assets.getResult("SlotMachine"));
             this.addChild(this._backgroundImage);
@@ -42,15 +44,24 @@ var scenes;
             this._spinButton = new objects.Button("SpinButton", 412, 385, false);
             this.addChild(this._spinButton);
             this._spinButton.on("click", this._spinButtonClick, this);
+            // add JackPot Text to the scene
+            this._jackPotText = new objects.Label(this._jackpot.toString(), "14px Consolas", "#ff2640", 367, 119, false);
+            this._jackPotText.textAlign = 'right';
+            this.addChild(this._jackPotText);
+            // add Credits Text to the scene
+            this._creditsText = new objects.Label(this._playerMoney.toString(), "14px Consolas", "#ff2640", 274, 309, false);
+            this._creditsText.textAlign = 'right';
+            this.addChild(this._creditsText);
+            // add Bet Text to the scene
+            this._betText = new objects.Label(this._playerBet.toString(), "14px Consolas", "#ff2640", 364, 309, false);
+            this._betText.textAlign = 'right';
+            this.addChild(this._betText);
+            // add Result Text to the scene
+            this._resultText = new objects.Label(this._winnings.toString(), "14px Consolas", "#ff2640", 450, 309, false);
+            this._resultText.textAlign = 'right';
+            this.addChild(this._resultText);
             // Initialize Array of Bitmaps
-            this._reels = new Array();
-            for (var reel = 0; reel < 3; reel++) {
-                this._reels[reel] = new createjs.Bitmap(assets.getResult("Blank"));
-                this._reels[reel].x = 229 + (reel * 82);
-                this._reels[reel].y = 232;
-                this.addChild(this._reels[reel]);
-                console.log("reel" + reel + " " + this._reels[reel]);
-            }
+            this._initializeBitMapArray();
             // Setup Background
             this._setupBackground("WhiteBackground");
             // FadeIn - 500 milliseconds
@@ -65,6 +76,13 @@ var scenes;
         /* Utility function to check if a value falls within a range of bounds */
         SlotMachine.prototype._checkRange = function (value, lowerBounds, upperBounds) {
             return (value >= lowerBounds && value <= upperBounds) ? value : -1;
+        };
+        /* Utility function to reset the player stats */
+        SlotMachine.prototype._resetAll = function () {
+            this._playerMoney = 1000;
+            this._winnings = 0;
+            this._jackpot = 5000;
+            this._playerBet = 0;
         };
         /* When this function is called it determines the betLine results.
         e.g. Bar - Orange - Banana */
@@ -110,20 +128,50 @@ var scenes;
             }
             return betLine;
         };
+        SlotMachine.prototype._initializeBitMapArray = function () {
+            this._reels = new Array();
+            for (var reel = 0; reel < 3; reel++) {
+                this._reels[reel] = new createjs.Bitmap(assets.getResult("Blank"));
+                this._reels[reel].x = 229 + (reel * 82);
+                this._reels[reel].y = 232;
+                this.addChild(this._reels[reel]);
+                console.log("reel" + reel + " " + this._reels[reel]);
+            }
+        };
+        SlotMachine.prototype._makeBet = function (playerBet) {
+            // ensure the player has enough to successfully make his bet
+            if (playerBet <= this._playerMoney) {
+                this._playerBet += playerBet;
+                this._playerMoney -= playerBet;
+                this._creditsText.text = this._playerMoney.toString();
+                this._betText.text = this._playerBet.toString();
+            }
+            else {
+            }
+        };
         //EVENT HANDLERS ++++++++++++++++++++
         SlotMachine.prototype._bet1ButtonClick = function (event) {
             console.log('Bet 1 Credit');
+            this._makeBet(1);
         };
         SlotMachine.prototype._bet10ButtonClick = function (event) {
             console.log('Bet 10 Credit');
+            this._makeBet(10);
         };
         SlotMachine.prototype._bet100ButtonClick = function (event) {
             console.log('Bet 100 Credit');
+            this._makeBet(100);
         };
         SlotMachine.prototype._spinButtonClick = function (event) {
-            var bitmap = this._spinReels();
-            for (var reel = 0; reel < 3; reel++) {
-                this._reels[reel].image = assets.getResult(bitmap[reel]);
+            // ensure player has enough money to play
+            if (this._playerBet > 0) {
+                var bitmap = this._spinReels();
+                for (var reel = 0; reel < 3; reel++) {
+                    this._reels[reel].image = assets.getResult(bitmap[reel]);
+                }
+                // reset player's bet to zero
+                this._playerBet = 0;
+                this._betText.text = this._playerBet.toString();
             }
         };
         return SlotMachine;
