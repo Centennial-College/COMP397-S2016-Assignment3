@@ -3,6 +3,7 @@
         //PUBLIC INSTANCE VARIABLES
         public width: number;
         public height: number;
+
         //CONSTRUCTOR
         constructor(pathString: string, x: number, y: number, public isCentered: boolean) {
             super(assets.getResult(pathString));
@@ -21,6 +22,19 @@
             this.on("mouseout", this.outButton, this);
         }
 
+        // PUBLIC METHODS
+        // Disable the button
+        public DisableButton(): void {
+            this.alpha = 0.7;
+            this.mouseEnabled = false;
+        }
+
+        // Enable the button to be clicked
+        public EnableButton(): void {
+            this.alpha = 1.0;
+            this.mouseEnabled = true;
+        }
+
         // PRIVATE METHODS
         // Event Handler for mouse over
         overButton(event: createjs.MouseEvent): void {
@@ -31,7 +45,5 @@
         outButton(event: createjs.MouseEvent): void {
             event.currentTarget.alpha = 1.0;
         }
-
-
     }
 } 

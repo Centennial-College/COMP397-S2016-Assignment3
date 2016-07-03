@@ -22,6 +22,17 @@ var objects;
             this.on("mouseover", this.overButton, this);
             this.on("mouseout", this.outButton, this);
         }
+        // PUBLIC METHODS
+        // Disable the button
+        Button.prototype.DisableButton = function () {
+            this.alpha = 0.7;
+            this.mouseEnabled = false;
+        };
+        // Enable the button to be clicked
+        Button.prototype.EnableButton = function () {
+            this.alpha = 1.0;
+            this.mouseEnabled = true;
+        };
         // PRIVATE METHODS
         // Event Handler for mouse over
         Button.prototype.overButton = function (event) {

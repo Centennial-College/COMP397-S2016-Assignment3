@@ -8,11 +8,11 @@ var scenes;
 (function (scenes) {
     var SlotMachine = (function (_super) {
         __extends(SlotMachine, _super);
-        // CONSTRUCTOR ++++++++++++++++++++++
+        // CONSTRUCTOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         function SlotMachine() {
             _super.call(this);
         }
-        // PUBLIC METHODS +++++++++++++++++++++
+        // PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // Start Method
         SlotMachine.prototype.start = function () {
             // Reset the Game to initialize values
@@ -64,13 +64,29 @@ var scenes;
         };
         // SLOT_MACHINE Scene updates here
         SlotMachine.prototype.update = function () {
+            // By default all buttons are enabled
+            this._enableAllButtons();
+            // Place bet buttons are disabled when player's credits not enough
+            if (this._playerMoney < 100) {
+                this._bet100Button.DisableButton();
+            }
+            if (this._playerMoney < 10) {
+                this._bet10Button.DisableButton();
+            }
+            if (this._playerMoney < 1) {
+                this._bet1Button.DisableButton();
+            }
+            // Spin button is diabled until player makes a bet
+            if (this._playerBet == 0) {
+                this._spinButton.DisableButton();
+            }
         };
-        // PRIVATE METHODS
+        // PRIVATE METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         /* Utility function to check if a value falls within a range of bounds */
         SlotMachine.prototype._checkRange = function (value, lowerBounds, upperBounds) {
             return (value >= lowerBounds && value <= upperBounds) ? value : -1;
         };
-        /* Utility function to reset the player stats */
+        /* Utility function to reset the player stats and button availability */
         SlotMachine.prototype._resetAll = function () {
             this._playerMoney = 1000;
             this._winnings = 0;
@@ -174,13 +190,12 @@ var scenes;
                 }
                 console.log('Win!');
                 console.log('Won : ' + this._winnings);
-                console.log('playerbet: ' + this._playerBet);
             }
             else {
                 console.log('Loss!');
             }
-            this._resultText.text = this._winnings.toString();
-            this._playerMoney += this._winnings;
+            this._resultText.text = this._winnings.toString(); //results = winnings
+            this._playerMoney += this._winnings; //increment credits
             this._creditsText.text = this._playerMoney.toString();
             this._resetFruitTally();
         };
@@ -207,18 +222,24 @@ var scenes;
             }
         };
         SlotMachine.prototype._makeBet = function (playerBet) {
-            // ensure the player has enough to successfully make his bet
-            if (playerBet <= this._playerMoney) {
-                this._playerBet += playerBet;
-                this._playerMoney -= playerBet;
-                this._creditsText.text = this._playerMoney.toString();
-                this._betText.text = this._playerBet.toString();
-                console.log('Bet ' + playerBet + ' Credit.');
-            }
-            else {
-            }
+            this._playerBet += playerBet;
+            this._playerMoney -= playerBet;
+            this._creditsText.text = this._playerMoney.toString();
+            this._betText.text = this._playerBet.toString();
+            console.log('Bet ' + playerBet + ' Credit.');
         };
-        //EVENT HANDLERS ++++++++++++++++++++
+        /* Utility function to enable all buttons currently disabled */
+        SlotMachine.prototype._enableAllButtons = function () {
+            if (!this._bet1Button.mouseEnabled)
+                this._bet1Button.EnableButton();
+            if (!this._bet10Button.mouseEnabled)
+                this._bet10Button.EnableButton();
+            if (!this._bet100Button.mouseEnabled)
+                this._bet100Button.EnableButton();
+            if (!this._spinButton.mouseEnabled)
+                this._spinButton.EnableButton();
+        };
+        //EVENT HANDLERS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         SlotMachine.prototype._bet1ButtonClick = function (event) {
             this._makeBet(1);
         };
@@ -231,18 +252,15 @@ var scenes;
         SlotMachine.prototype._spinButtonClick = function (event) {
             // resets the winnings before each spin
             this._winnings = 0;
-            // ensure player has enough money to play
-            if (this._playerBet > 0) {
-                var bitmap = this._spinReels();
-                for (var reel = 0; reel < 3; reel++) {
-                    this._reels[reel].image = assets.getResult(bitmap[reel]);
-                }
-                // calculate the winnings for the current spin
-                this._determineWinnings();
-                // reset player's bet to zero
-                this._playerBet = 0;
-                this._betText.text = this._playerBet.toString();
+            var bitmap = this._spinReels();
+            for (var reel = 0; reel < 3; reel++) {
+                this._reels[reel].image = assets.getResult(bitmap[reel]);
             }
+            // calculate the winnings for the current spin
+            this._determineWinnings();
+            // reset player's bet to zero
+            this._playerBet = 0;
+            this._betText.text = this._playerBet.toString();
         };
         return SlotMachine;
     }(objects.Scene));
