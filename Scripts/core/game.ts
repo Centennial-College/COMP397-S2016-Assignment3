@@ -1,4 +1,15 @@
-﻿/// <reference path = "_reference.ts" />
+﻿/**
+ * File name: game.ts
+ * @Author: Kevin Ma
+ * Student #: 300867968
+ * @Date: July 2, 2016
+ * 
+ * @Description: This file is used as the main typescript file for the slotmachine game.
+ * 
+ * Version: 0.11 - 	standardized all image fonts to size 12, centered
+ */
+
+/// <reference path = "_reference.ts" />
 
 // global variables
 var assets: createjs.LoadQueue;

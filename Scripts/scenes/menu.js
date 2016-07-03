@@ -1,11 +1,31 @@
+/**
+ * File name: menu.ts
+ * @Author: Kevin Ma
+ * Student #: 300867968
+ * @Date: July 2, 2016
+ *
+ * @Description: This class is used as a menu scene to the game.
+ *
+ * Version: 0.12 - updated UI, implemented betting and spinning mechanism
+ */
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-// MENU SCENE
+/**
+ * Provides the base Scene namespace
+ *
+ * @module scenes
+ */
 var scenes;
 (function (scenes) {
+    /**
+     * Emulates the menu scene for the game.
+     *
+     * @class Menu
+     * @extends objects.Scene
+     */
     var Menu = (function (_super) {
         __extends(Menu, _super);
         // CONSTRUCTOR ++++++++++++++++++++++

@@ -1,6 +1,28 @@
-// SLOT_MACHINE SCENE
+/**
+ * File name: slotmachine.ts
+ * @Author: Kevin Ma
+ * Student #: 300867968
+ * @Date: July 3, 2016
+ * 
+ * @Description: This typescript file contains all the code required to emulate a 
+ * web slot machine game interface.
+ * 
+ * Version: 0.14 - added checks to disable betting and spin buttons when appropiate
+ */
+
+/**
+ * Provides the base Scene namespace
+ * 
+ * @module scenes
+ */
 module scenes {
-    export class SlotMachine extends objects.Scene {
+   /**
+     * Emulates the slot machine scene for the game where most of the action occurs.
+     * 
+     * @class SlotMachine
+     * @extends objects.Scene
+     */
+     export class SlotMachine extends objects.Scene {
         //PRIVATE INSTANCE VARIABLES ++++++++++++++++++++++++++++++++++++++++++++++++
         private _backgroundImage: createjs.Bitmap;
         private _bet1Button: objects.Button;
@@ -143,7 +165,7 @@ module scenes {
             return (value >= lowerBounds && value <= upperBounds) ? value : -1;
         }
 
-        /* Utility function to reset the player stats and button availability */
+        /* Utility function to reset the player stats */
         private _resetAll() {
             this._playerMoney = 1000;
             this._winnings = 0;

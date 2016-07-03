@@ -1,4 +1,26 @@
-﻿module objects {
+﻿/**
+ * File name: button.ts
+ * @Author: Kevin Ma
+ * Student #: 300867968
+ * @Date: July 3, 2016
+ * 
+ * @Description: This class is used as a GUI button control.
+ * 
+ * Version: 0.14 - added checks to disable betting and spin buttons when appropiate
+ */
+
+/**
+ * Provides the base Object namespace
+ * 
+ * @module objects
+ */
+module objects {
+    /**
+     * A utility used to create GUI button controls
+     * 
+     * @class Button
+     * @extends createjs.Bitmap
+     */
     export class Button extends createjs.Bitmap {
         //PUBLIC INSTANCE VARIABLES
         public width: number;

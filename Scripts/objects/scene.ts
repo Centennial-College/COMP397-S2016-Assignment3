@@ -1,5 +1,26 @@
+/**
+ * File name: scene.ts
+ * @Author: Kevin Ma
+ * Student #: 300867968
+ * @Date: July 2, 2016
+ * 
+ * @Description: This class is used as a template for the different scenes of the game.
+ * 
+ * Version: 0.9 - added in fade in and fade out transitions for menu and slotmachine scenes
+ */
+
+/**
+ * Provides the base Object namespace
+ * 
+ * @module objects
+ */
 module objects {
-    // Scene Class
+    /**
+     * A utility used to create different scenes for the project.
+     * 
+     * @class Scene
+     * @extends createjs.Container
+     */
     export class Scene extends createjs.Container {
         // PROTECTED INSTANCE VARIABLES
         protected _background: createjs.Bitmap;

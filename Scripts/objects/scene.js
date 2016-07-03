@@ -1,11 +1,31 @@
+/**
+ * File name: scene.ts
+ * @Author: Kevin Ma
+ * Student #: 300867968
+ * @Date: July 2, 2016
+ *
+ * @Description: This class is used as a template for the different scenes of the game.
+ *
+ * Version: 0.9 - added in fade in and fade out transitions for menu and slotmachine scenes
+ */
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+/**
+ * Provides the base Object namespace
+ *
+ * @module objects
+ */
 var objects;
 (function (objects) {
-    // Scene Class
+    /**
+     * A utility used to create different scenes for the project.
+     *
+     * @class Scene
+     * @extends createjs.Container
+     */
     var Scene = (function (_super) {
         __extends(Scene, _super);
         // CONSTRUCTOR +++++++++++++++++++++++++++++

@@ -1,5 +1,27 @@
+/**
+ * File name: gameover.ts
+ * @Author: Kevin Ma
+ * Student #: 300867968
+ * @Date: July 2, 2016
+ * 
+ * @Description: This class is used as a game over scene for the game.
+ * 
+ * Version: 0.12 - updated UI, implemented betting and spinning mechanism
+ */
+
+/**
+ * Provides the base Scene namespace
+ * 
+ * @module scenes
+ */
 // GAME_OVER SCENE
 module scenes {
+    /**
+     * Emulates the game over scene for the game.
+     * 
+     * @class GameOver
+     * @extends objects.Scene
+     */
     export class GameOver extends objects.Scene {
         //PRIVATE INSTANCE VARIABLES ++++++++++++
         private _startOverButton: objects.Button;

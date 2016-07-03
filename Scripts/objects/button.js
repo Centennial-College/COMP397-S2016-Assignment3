@@ -1,10 +1,31 @@
+/**
+ * File name: button.ts
+ * @Author: Kevin Ma
+ * Student #: 300867968
+ * @Date: July 3, 2016
+ *
+ * @Description: This class is used as a GUI button control.
+ *
+ * Version: 0.14 - added checks to disable betting and spin buttons when appropiate
+ */
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+/**
+ * Provides the base Object namespace
+ *
+ * @module objects
+ */
 var objects;
 (function (objects) {
+    /**
+     * A utility used to create GUI button controls
+     *
+     * @class Button
+     * @extends createjs.Bitmap
+     */
     var Button = (function (_super) {
         __extends(Button, _super);
         //CONSTRUCTOR

@@ -1,11 +1,32 @@
+/**
+ * File name: gameover.ts
+ * @Author: Kevin Ma
+ * Student #: 300867968
+ * @Date: July 2, 2016
+ *
+ * @Description: This class is used as a game over scene for the game.
+ *
+ * Version: 0.12 - updated UI, implemented betting and spinning mechanism
+ */
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+/**
+ * Provides the base Scene namespace
+ *
+ * @module scenes
+ */
 // GAME_OVER SCENE
 var scenes;
 (function (scenes) {
+    /**
+     * Emulates the game over scene for the game.
+     *
+     * @class GameOver
+     * @extends objects.Scene
+     */
     var GameOver = (function (_super) {
         __extends(GameOver, _super);
         // CONSTRUCTOR ++++++++++++++++++++++

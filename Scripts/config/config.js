@@ -1,3 +1,18 @@
+/**
+ * File name: config.ts
+ * @Author: Kevin Ma
+ * Student #: 300867968
+ * @Date: July 1, 2016
+ *
+ * @Description: This file maintains all the constants and configurations for the game.
+ *
+ * Version: 0.1 - updated project for slot machine
+ */
+/**
+ * Provides the base Config namespace
+ *
+ * @module config
+ */
 var config;
 (function (config) {
     // Scene Constants

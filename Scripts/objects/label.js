@@ -1,11 +1,31 @@
+/**
+ * File name: label.ts
+ * @Author: Kevin Ma
+ * Student #: 300867968
+ * @Date: July 2, 2016
+ *
+ * @Description: This class is used as a GUI control that displays text.
+ *
+ * Version: 0.12 - updated UI, implemented betting and spinning mechanism
+ */
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+/**
+ * Provides the base Object namespace
+ *
+ * @module objects
+ */
 var objects;
 (function (objects) {
-    // LABEL CLASS ++++++++++++++++++++++++++++++++++++++++++++++
+    /**
+     * A utility used to create GUI labels
+     *
+     * @class Label
+     * @extends createjs.Text
+     */
     var Label = (function (_super) {
         __extends(Label, _super);
         // CONSTRUCTOR METHOD +++++++++++++++++++++++++++++++++++

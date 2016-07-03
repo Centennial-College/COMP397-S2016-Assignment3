@@ -1,5 +1,26 @@
-// MENU SCENE
+/**
+ * File name: menu.ts
+ * @Author: Kevin Ma
+ * Student #: 300867968
+ * @Date: July 2, 2016
+ * 
+ * @Description: This class is used as a menu scene to the game.
+ * 
+ * Version: 0.12 - updated UI, implemented betting and spinning mechanism
+ */
+
+/**
+ * Provides the base Scene namespace
+ * 
+ * @module scenes
+ */
 module scenes {
+    /**
+     * Emulates the menu scene for the game.
+     * 
+     * @class Menu
+     * @extends objects.Scene
+     */
     export class Menu extends objects.Scene {
         //PRIVATE INSTANCE VARIABLES ++++++++++++
         private _startButton: objects.Button;
