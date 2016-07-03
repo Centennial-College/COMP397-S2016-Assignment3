@@ -17,14 +17,14 @@ module scenes {
         private _jackpot: number;
         private _playerBet: number;
 
-        private _grapes = 0;
-        private _bananas = 0;
-        private _oranges = 0;
-        private _cherries = 0;
-        private _bars = 0;
-        private _bells = 0;
-        private _sevens = 0;
-        private _blanks = 0;
+        private _grapes: number;
+        private _bananas: number;
+        private _oranges: number;
+        private _cherries: number;
+        private _bars: number;
+        private _bells: number;
+        private _sevens: number;
+        private _blanks: number;
 
         // CONSTRUCTOR ++++++++++++++++++++++
         constructor() {
@@ -37,6 +37,7 @@ module scenes {
         public start(): void {
             // Reset the Game to initialize values
             this._resetAll();
+            this._resetFruitTally();
 
             // add background image to the scene
             this._backgroundImage = new createjs.Bitmap(assets.getResult("SlotMachine"));
@@ -180,6 +181,86 @@ module scenes {
             return betLine;
         }
 
+        /* This function calculates the player's winnings, if any */
+        private _determineWinnings(): void {
+            if (this._blanks == 0) {
+                if (this._grapes == 3) {
+                    this._winnings = this._playerBet * 10;
+                }
+                else if (this._bananas == 3) {
+                    this._winnings = this._playerBet * 20;
+                }
+                else if (this._oranges == 3) {
+                    this._winnings = this._playerBet * 30;
+                }
+                else if (this._cherries == 3) {
+                    this._winnings = this._playerBet * 40;
+                }
+                else if (this._bars == 3) {
+                    this._winnings = this._playerBet * 50;
+                }
+                else if (this._bells == 3) {
+                    this._winnings = this._playerBet * 75;
+                }
+                else if (this._sevens == 3) {
+                    this._winnings = this._playerBet * 100;
+                }
+                else if (this._grapes == 2) {
+                    this._winnings = this._playerBet * 2;
+                }
+                else if (this._bananas == 2) {
+                    this._winnings = this._playerBet * 2;
+                }
+                else if (this._oranges == 2) {
+                    this._winnings = this._playerBet * 3;
+                }
+                else if (this._cherries == 2) {
+                    this._winnings = this._playerBet * 4;
+                }
+                else if (this._bars == 2) {
+                    this._winnings = this._playerBet * 5;
+                }
+                else if (this._bells == 2) {
+                    this._winnings = this._playerBet * 10;
+                }
+                else if (this._sevens == 2) {
+                    this._winnings = this._playerBet * 20;
+                }
+                else if (this._sevens == 1) {
+                    this._winnings = this._playerBet * 5;
+                }
+                else {
+                    this._winnings = this._playerBet * 1;
+                }
+                console.log('Win!');
+                console.log('Won : ' + this._winnings);
+                console.log('playerbet: ' + this._playerBet);
+                // showWinMessage();
+            }
+            else {
+                console.log('Loss!');
+                // showLossMessage();
+            }
+
+            this._resultText.text = this._winnings.toString();
+            this._playerMoney += this._winnings;
+            this._creditsText.text = this._playerMoney.toString();
+            this._resetFruitTally();
+        }
+
+        /* Utility function to reset the fruit tally counters */
+        private _resetFruitTally(): void {
+            this._grapes = 0;
+            this._bananas = 0;
+            this._oranges = 0;
+            this._cherries = 0;
+            this._bars = 0;
+            this._bells = 0;
+            this._sevens = 0;
+            this._blanks = 0;
+        }
+
+        /* Utility function that initializes the bitmap array with 3 blank reels */
         private _initializeBitMapArray(): void {
             this._reels = new Array<createjs.Bitmap>();
             for (var reel: number = 0; reel < 3; reel++) {
@@ -198,6 +279,7 @@ module scenes {
                 this._playerMoney -= playerBet;
                 this._creditsText.text = this._playerMoney.toString();
                 this._betText.text = this._playerBet.toString();
+                console.log('Bet ' + playerBet + ' Credit.');
             }
             else {
                 // make error sound
@@ -206,21 +288,21 @@ module scenes {
 
         //EVENT HANDLERS ++++++++++++++++++++
         private _bet1ButtonClick(event: createjs.MouseEvent): void {
-            console.log('Bet 1 Credit');
             this._makeBet(1);
         }
 
         private _bet10ButtonClick(event: createjs.MouseEvent): void {
-            console.log('Bet 10 Credit');
             this._makeBet(10);
         }
 
         private _bet100ButtonClick(event: createjs.MouseEvent): void {
-            console.log('Bet 100 Credit');
             this._makeBet(100);
         }
 
         private _spinButtonClick(event: createjs.MouseEvent): void {
+            // resets the winnings before each spin
+            this._winnings = 0;
+
             // ensure player has enough money to play
             if (this._playerBet > 0) {
                 var bitmap: string[] = this._spinReels();
@@ -228,6 +310,9 @@ module scenes {
                 for (var reel: number = 0; reel < 3; reel++) {
                     this._reels[reel].image = assets.getResult(bitmap[reel]);
                 }
+
+                // calculate the winnings for the current spin
+                this._determineWinnings();
 
                 // reset player's bet to zero
                 this._playerBet = 0;

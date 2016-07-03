@@ -11,20 +11,13 @@ var scenes;
         // CONSTRUCTOR ++++++++++++++++++++++
         function SlotMachine() {
             _super.call(this);
-            this._grapes = 0;
-            this._bananas = 0;
-            this._oranges = 0;
-            this._cherries = 0;
-            this._bars = 0;
-            this._bells = 0;
-            this._sevens = 0;
-            this._blanks = 0;
         }
         // PUBLIC METHODS +++++++++++++++++++++
         // Start Method
         SlotMachine.prototype.start = function () {
             // Reset the Game to initialize values
             this._resetAll();
+            this._resetFruitTally();
             // add background image to the scene
             this._backgroundImage = new createjs.Bitmap(assets.getResult("SlotMachine"));
             this.addChild(this._backgroundImage);
@@ -128,6 +121,81 @@ var scenes;
             }
             return betLine;
         };
+        /* This function calculates the player's winnings, if any */
+        SlotMachine.prototype._determineWinnings = function () {
+            if (this._blanks == 0) {
+                if (this._grapes == 3) {
+                    this._winnings = this._playerBet * 10;
+                }
+                else if (this._bananas == 3) {
+                    this._winnings = this._playerBet * 20;
+                }
+                else if (this._oranges == 3) {
+                    this._winnings = this._playerBet * 30;
+                }
+                else if (this._cherries == 3) {
+                    this._winnings = this._playerBet * 40;
+                }
+                else if (this._bars == 3) {
+                    this._winnings = this._playerBet * 50;
+                }
+                else if (this._bells == 3) {
+                    this._winnings = this._playerBet * 75;
+                }
+                else if (this._sevens == 3) {
+                    this._winnings = this._playerBet * 100;
+                }
+                else if (this._grapes == 2) {
+                    this._winnings = this._playerBet * 2;
+                }
+                else if (this._bananas == 2) {
+                    this._winnings = this._playerBet * 2;
+                }
+                else if (this._oranges == 2) {
+                    this._winnings = this._playerBet * 3;
+                }
+                else if (this._cherries == 2) {
+                    this._winnings = this._playerBet * 4;
+                }
+                else if (this._bars == 2) {
+                    this._winnings = this._playerBet * 5;
+                }
+                else if (this._bells == 2) {
+                    this._winnings = this._playerBet * 10;
+                }
+                else if (this._sevens == 2) {
+                    this._winnings = this._playerBet * 20;
+                }
+                else if (this._sevens == 1) {
+                    this._winnings = this._playerBet * 5;
+                }
+                else {
+                    this._winnings = this._playerBet * 1;
+                }
+                console.log('Win!');
+                console.log('Won : ' + this._winnings);
+                console.log('playerbet: ' + this._playerBet);
+            }
+            else {
+                console.log('Loss!');
+            }
+            this._resultText.text = this._winnings.toString();
+            this._playerMoney += this._winnings;
+            this._creditsText.text = this._playerMoney.toString();
+            this._resetFruitTally();
+        };
+        /* Utility function to reset the fruit tally counters */
+        SlotMachine.prototype._resetFruitTally = function () {
+            this._grapes = 0;
+            this._bananas = 0;
+            this._oranges = 0;
+            this._cherries = 0;
+            this._bars = 0;
+            this._bells = 0;
+            this._sevens = 0;
+            this._blanks = 0;
+        };
+        /* Utility function that initializes the bitmap array with 3 blank reels */
         SlotMachine.prototype._initializeBitMapArray = function () {
             this._reels = new Array();
             for (var reel = 0; reel < 3; reel++) {
@@ -145,30 +213,32 @@ var scenes;
                 this._playerMoney -= playerBet;
                 this._creditsText.text = this._playerMoney.toString();
                 this._betText.text = this._playerBet.toString();
+                console.log('Bet ' + playerBet + ' Credit.');
             }
             else {
             }
         };
         //EVENT HANDLERS ++++++++++++++++++++
         SlotMachine.prototype._bet1ButtonClick = function (event) {
-            console.log('Bet 1 Credit');
             this._makeBet(1);
         };
         SlotMachine.prototype._bet10ButtonClick = function (event) {
-            console.log('Bet 10 Credit');
             this._makeBet(10);
         };
         SlotMachine.prototype._bet100ButtonClick = function (event) {
-            console.log('Bet 100 Credit');
             this._makeBet(100);
         };
         SlotMachine.prototype._spinButtonClick = function (event) {
+            // resets the winnings before each spin
+            this._winnings = 0;
             // ensure player has enough money to play
             if (this._playerBet > 0) {
                 var bitmap = this._spinReels();
                 for (var reel = 0; reel < 3; reel++) {
                     this._reels[reel].image = assets.getResult(bitmap[reel]);
                 }
+                // calculate the winnings for the current spin
+                this._determineWinnings();
                 // reset player's bet to zero
                 this._playerBet = 0;
                 this._betText.text = this._playerBet.toString();
