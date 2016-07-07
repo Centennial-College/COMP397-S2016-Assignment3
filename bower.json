@@ -1,0 +1,26 @@
+{
+  "name": "COMP397-S2016-Assignment3",
+  "homepage": "https://github.com/Kb-Ma/COMP397-S2016-Assignment3",
+  "authors": [
+    "Kevin Ma <kbma.kevin@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "Scripts/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "EaselJS": "^0.8.2",
+    "PreloadJS": "^0.6.2",
+    "SoundJS": "^0.6.2",
+    "TweenJS": "^0.6.2",
+    "stats.js": "*"
+  }
+}

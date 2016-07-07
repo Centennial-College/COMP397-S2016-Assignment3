@@ -2,12 +2,12 @@
  * File name: slotmachine.ts
  * @Author: Kevin Ma
  * Student #: 300867968
- * @Date: July 3, 2016
+ * @Date: July 4, 2016
  *
  * @Description: This typescript file contains all the code required to emulate a
  * web slot machine game interface.
  *
- * Version: 0.14 - added checks to disable betting and spin buttons when appropiate
+ * Version: 0.15 - redesigned UI to accomodate 5 reels and additional reset and quit buttons
  */
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -43,35 +43,43 @@ var scenes;
             this._backgroundImage = new createjs.Bitmap(assets.getResult("SlotMachine"));
             this.addChild(this._backgroundImage);
             // add Bet1Button to the scene
-            this._bet1Button = new objects.Button("Bet1Button", 185, 385, false);
+            this._bet1Button = new objects.Button("Bet1Button", 249, 384, false);
             this.addChild(this._bet1Button);
             this._bet1Button.on("click", this._bet1ButtonClick, this);
             // add Bet10Button to the scene
-            this._bet10Button = new objects.Button("Bet10Button", 253, 385, false);
+            this._bet10Button = new objects.Button("Bet10Button", 333, 384, false);
             this.addChild(this._bet10Button);
             this._bet10Button.on("click", this._bet10ButtonClick, this);
             // add Bet100Button to the scene
-            this._bet100Button = new objects.Button("Bet100Button", 323, 385, false);
+            this._bet100Button = new objects.Button("Bet100Button", 417, 384, false);
             this.addChild(this._bet100Button);
             this._bet100Button.on("click", this._bet100ButtonClick, this);
             // add SpinButton to the scene
-            this._spinButton = new objects.Button("SpinButton", 412, 385, false);
+            this._spinButton = new objects.Button("SpinButton", 501, 384, false);
             this.addChild(this._spinButton);
             this._spinButton.on("click", this._spinButtonClick, this);
+            // add ResetButton to the scene
+            this._resetButton = new objects.Button("ResetButton", 81, 384, false);
+            this.addChild(this._resetButton);
+            this._resetButton.on("click", this._resetButtonClick, this);
+            // add CashOutButton to the scene
+            this._cashOutButton = new objects.Button("CashOutButton", 165, 384, false);
+            this.addChild(this._cashOutButton);
+            this._cashOutButton.on("click", this._cashOutButtonClick, this);
             // add JackPot Text to the scene
-            this._jackPotText = new objects.Label(this._jackpot.toString(), "14px Consolas", "#ff2640", 367, 119, false);
+            this._jackPotText = new objects.Label(this._jackpot.toString(), "14px Consolas", "#ff2640", 202, 309, false);
             this._jackPotText.textAlign = 'right';
             this.addChild(this._jackPotText);
             // add Credits Text to the scene
-            this._creditsText = new objects.Label(this._playerMoney.toString(), "14px Consolas", "#ff2640", 274, 309, false);
+            this._creditsText = new objects.Label(this._playerMoney.toString(), "14px Consolas", "#ff2640", 303, 309, false);
             this._creditsText.textAlign = 'right';
             this.addChild(this._creditsText);
             // add Bet Text to the scene
-            this._betText = new objects.Label(this._playerBet.toString(), "14px Consolas", "#ff2640", 364, 309, false);
+            this._betText = new objects.Label(this._playerBet.toString(), "14px Consolas", "#ff2640", 405, 309, false);
             this._betText.textAlign = 'right';
             this.addChild(this._betText);
             // add Result Text to the scene
-            this._resultText = new objects.Label(this._winnings.toString(), "14px Consolas", "#ff2640", 450, 309, false);
+            this._resultText = new objects.Label(this._winnings.toString(), "14px Consolas", "#ff2640", 507, 309, false);
             this._resultText.textAlign = 'right';
             this.addChild(this._resultText);
             // Initialize Array of Bitmaps
@@ -117,9 +125,9 @@ var scenes;
         /* When this function is called it determines the betLine results.
         e.g. Bar - Orange - Banana */
         SlotMachine.prototype._spinReels = function () {
-            var betLine = [" ", " ", " "];
-            var outCome = [0, 0, 0];
-            for (var spin = 0; spin < 3; spin++) {
+            var betLine = [" ", " ", " ", " ", " "];
+            var outCome = [0, 0, 0, 0, 0];
+            for (var spin = 0; spin < 5; spin++) {
                 outCome[spin] = Math.floor((Math.random() * 65) + 1);
                 switch (outCome[spin]) {
                     case this._checkRange(outCome[spin], 1, 27):
@@ -161,26 +169,69 @@ var scenes;
         /* This function calculates the player's winnings, if any */
         SlotMachine.prototype._determineWinnings = function () {
             if (this._blanks == 0) {
-                if (this._grapes == 3) {
+                // 5 matches 
+                if (this._grapes == 5) {
                     this._winnings = this._playerBet * 10;
                 }
-                else if (this._bananas == 3) {
+                else if (this._bananas == 5) {
                     this._winnings = this._playerBet * 20;
                 }
-                else if (this._oranges == 3) {
+                else if (this._oranges == 5) {
                     this._winnings = this._playerBet * 30;
                 }
-                else if (this._cherries == 3) {
+                else if (this._cherries == 5) {
                     this._winnings = this._playerBet * 40;
                 }
-                else if (this._bars == 3) {
+                else if (this._bars == 5) {
                     this._winnings = this._playerBet * 50;
                 }
-                else if (this._bells == 3) {
+                else if (this._bells == 5) {
                     this._winnings = this._playerBet * 75;
                 }
-                else if (this._sevens == 3) {
+                else if (this._sevens == 5) {
                     this._winnings = this._playerBet * 100;
+                }
+                else if (this._grapes == 4) {
+                    this._winnings = this._playerBet * 6;
+                }
+                else if (this._bananas == 4) {
+                    this._winnings = this._playerBet * 6;
+                }
+                else if (this._oranges == 4) {
+                    this._winnings = this._playerBet * 8;
+                }
+                else if (this._cherries == 4) {
+                    this._winnings = this._playerBet * 10;
+                }
+                else if (this._bars == 4) {
+                    this._winnings = this._playerBet * 12;
+                }
+                else if (this._bells == 4) {
+                    this._winnings = this._playerBet * 25;
+                }
+                else if (this._sevens == 4) {
+                    this._winnings = this._playerBet * 50;
+                }
+                else if (this._grapes == 3) {
+                    this._winnings = this._playerBet * 3;
+                }
+                else if (this._bananas == 3) {
+                    this._winnings = this._playerBet * 3;
+                }
+                else if (this._oranges == 3) {
+                    this._winnings = this._playerBet * 4;
+                }
+                else if (this._cherries == 3) {
+                    this._winnings = this._playerBet * 5;
+                }
+                else if (this._bars == 3) {
+                    this._winnings = this._playerBet * 6;
+                }
+                else if (this._bells == 3) {
+                    this._winnings = this._playerBet * 12;
+                }
+                else if (this._sevens == 3) {
+                    this._winnings = this._playerBet * 25;
                 }
                 else if (this._grapes == 2) {
                     this._winnings = this._playerBet * 2;
@@ -234,10 +285,28 @@ var scenes;
         /* Utility function that initializes the bitmap array with 3 blank reels */
         SlotMachine.prototype._initializeBitMapArray = function () {
             this._reels = new Array();
-            for (var reel = 0; reel < 3; reel++) {
+            for (var reel = 0; reel < 5; reel++) {
                 this._reels[reel] = new createjs.Bitmap(assets.getResult("Blank"));
-                this._reels[reel].x = 229 + (reel * 82);
-                this._reels[reel].y = 232;
+                // can't do this._reels[reel].x = 138 + (82 * reel)
+                // because not all +82, some +79, some + 84
+                switch (reel) {
+                    case 0:
+                        this._reels[reel].x = 138;
+                        break;
+                    case 1:
+                        this._reels[reel].x = 217;
+                        break;
+                    case 2:
+                        this._reels[reel].x = 301;
+                        break;
+                    case 3:
+                        this._reels[reel].x = 385;
+                        break;
+                    case 4:
+                        this._reels[reel].x = 464;
+                        break;
+                }
+                this._reels[reel].y = 230;
                 this.addChild(this._reels[reel]);
                 console.log("reel" + reel + " " + this._reels[reel]);
             }
@@ -274,7 +343,7 @@ var scenes;
             // resets the winnings before each spin
             this._winnings = 0;
             var bitmap = this._spinReels();
-            for (var reel = 0; reel < 3; reel++) {
+            for (var reel = 0; reel < 5; reel++) {
                 this._reels[reel].image = assets.getResult(bitmap[reel]);
             }
             // calculate the winnings for the current spin
@@ -282,6 +351,10 @@ var scenes;
             // reset player's bet to zero
             this._playerBet = 0;
             this._betText.text = this._playerBet.toString();
+        };
+        SlotMachine.prototype._resetButtonClick = function (event) {
+        };
+        SlotMachine.prototype._cashOutButtonClick = function (event) {
         };
         return SlotMachine;
     }(objects.Scene));

@@ -2,11 +2,11 @@
  * File name: game.ts
  * @Author: Kevin Ma
  * Student #: 300867968
- * @Date: July 2, 2016
+ * @Date: July 4, 2016
  *
  * @Description: This file is used as the main typescript file for the slotmachine game.
  *
- * Version: 0.11 - 	standardized all image fonts to size 12, centered
+ * Version: 0.15 - redesigned UI to accomodate 5 reels and additional reset and quit buttons
  */
 /// <reference path = "_reference.ts" />
 // global variables
@@ -31,6 +31,8 @@ var assetData = [
     { id: "Bet10Button", src: "../../Assets/images/Bet10Button.png" },
     { id: "Bet100Button", src: "../../Assets/images/Bet100Button.png" },
     { id: "SpinButton", src: "../../Assets/images/SpinButton.png" },
+    { id: "ResetButton", src: "../../Assets/images/ResetButton.png" },
+    { id: "CashOutButton", src: "../../Assets/images/CashOutButton.png" },
     { id: "WhiteBackground", src: "../../Assets/images/WhiteBackground.png" },
     { id: "Blank", src: "../../Assets/images/Blank.png" },
     { id: "Grapes", src: "../../Assets/images/Grapes.png" },
