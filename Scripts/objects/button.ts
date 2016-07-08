@@ -17,6 +17,7 @@ module objects {
     /**
      * This simple Button class extends the createjs.Bitmap object.
      * It includes two private methods to handle mouseover and mouseout events.
+     * It also includes two public methods which enable/disable buttons.
      * 
      * @export
      * @class Button
