@@ -1,32 +1,31 @@
 ﻿/// <reference path = "_reference.ts" />
 
 /**
- * File name: game.ts
- * @Author: Kevin Ma
- * Student #: 300867968
- * @Date: July 4, 2016
- * 
- * @Description: This file is used as the main typescript file for the slotmachine game.
- * 
- * Version: 0.15 - redesigned UI to accomodate 5 reels and additional reset and quit buttons
+ * @author Kevin Ma kma45@my.centennialcollege.ca
+ * @studentID 300867968
+ * @date: July 8, 2016
+ * @description: This file is the entry point for the game.
+ * @version 0.15.01 - added comments and replaced all var declarations with let to game.ts
  */
 
-// global variables
-var assets: createjs.LoadQueue;
-var canvas: HTMLElement;
-var stage: createjs.Stage;
-var stats: Stats;
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-var currentScene: objects.Scene;
-var scene: number;
+// Variable Declarations
+// Global Variables
+let assets: createjs.LoadQueue;
+let canvas: HTMLElement;
+let stage: createjs.Stage;
+let stats: Stats;
+let currentScene: objects.Scene;
+let scene: number;
 
 // Game Scenes
-var menu: scenes.Menu;
-var slotmachine: scenes.SlotMachine;
-var gameover: scenes.GameOver;
+let menu: scenes.Menu;
+let slotmachine: scenes.SlotMachine;
+let gameover: scenes.GameOver;
 
 // array of asset objects which contains all assets to be preloaded 
-var assetData: objects.Asset[] = [
+let assetData: objects.Asset[] = [
     { id: "BackButton", src: "../../Assets/images/BackButton.png" },
     { id: "NextButton", src: "../../Assets/images/NextButton.png" },
     { id: "StartButton", src: "../../Assets/images/StartButton.png" },
@@ -49,14 +48,25 @@ var assetData: objects.Asset[] = [
     { id: "Seven", src: "../../Assets/images/Seven.png" }
 ];
 
-// Preloads all SpinButtonSpinButtonhe assets required for the game before initiallizing the game
-function preload() {
+/**
+ * This method preloads all assets required for the game before initializing the game
+ * 
+ * @method preload
+ * @returns {void}
+ */
+function preload(): void {
     assets = new createjs.LoadQueue();
     assets.installPlugin(createjs.Sound);
     assets.on("complete", init, this);
     assets.loadManifest(assetData);
 }
 
+/**
+ * This method is the entry point for the application
+ * 
+ * @method init
+ * @returns {void}
+ */
 function init(): void {
     // create a reference the HTML canvas Element
     canvas = document.getElementById("canvas");
@@ -64,7 +74,7 @@ function init(): void {
     // create our main display list container
     stage = new createjs.Stage(canvas);
 
-    // Enable mouse events
+    // Enable mouse events, 20 frames per second; mouse events are resource intensive, so only enable them when required
     stage.enableMouseOver(20);
 
     // set the framerate to 60 frames per second
@@ -81,7 +91,13 @@ function init(): void {
     changeScene();
 }
 
-// Main Game Loop function that handles what happens each "tick" or frame
+/**
+ * Main Game Loop function that handles what happens each "tick" or frame
+ * 
+ * @method gameLoop 
+ * @param {createjs.Event} event
+ * @returns {void}
+ */
 function gameLoop(event: createjs.Event): void {
     // start collecting stats for this frame
     stats.begin();
@@ -96,7 +112,12 @@ function gameLoop(event: createjs.Event): void {
     stats.end();
 }
 
-// Setup Game Stats
+/**
+ * Setup Game Stats
+ * 
+ * @method setupStats
+ * @returns {void}
+ */
 function setupStats(): void {
     stats = new Stats();
     stats.setMode(0); // shows fps
@@ -106,7 +127,12 @@ function setupStats(): void {
     document.body.appendChild(stats.domElement);
 }
 
-// Finite State Machine used to change Scenes
+/**
+ * Finite State Machine used to change Scenes
+ * 
+ * @method changeScene
+ * @returns {void}
+ */
 function changeScene(): void {
 
     // Launch various scenes
@@ -137,4 +163,7 @@ function changeScene(): void {
     console.log(currentScene.numChildren);
 }
 
+// waits until the window object is finished loading, then calls the preload method
 window.onload = preload;
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
