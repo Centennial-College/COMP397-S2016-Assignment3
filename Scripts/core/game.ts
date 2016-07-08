@@ -1,4 +1,6 @@
-﻿/**
+﻿/// <reference path = "_reference.ts" />
+
+/**
  * File name: game.ts
  * @Author: Kevin Ma
  * Student #: 300867968
@@ -8,8 +10,6 @@
  * 
  * Version: 0.15 - redesigned UI to accomodate 5 reels and additional reset and quit buttons
  */
-
-/// <reference path = "_reference.ts" />
 
 // global variables
 var assets: createjs.LoadQueue;
