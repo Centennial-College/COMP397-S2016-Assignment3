@@ -1,39 +1,53 @@
 ﻿/**
- * File name: config.ts
- * @Author: Kevin Ma
- * Student #: 300867968
- * @Date: July 1, 2016
- * 
- * @Description: This file maintains all the constants and configurations for the game.
- * 
- * Version: 0.1 - updated project for slot machine
+ * @author Kevin Ma kma45@my.centennialcollge.ca
+ * @studentID 300867968
+ * @date July 8, 2016
+ * @description This file maintains all the constants and configurations for the project
+ * @version 0.15.04 - added comments to config.ts
  */
 
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 /**
- * Provides the base Config namespace
+ * This is the generic config namespace
  * 
  * @module config
  */
 module config {
-
-    // Scene Constants
+    /**
+     * Scene Constants
+     * 
+     * @export
+     * @class Scene
+     */
     export class Scene {
         public static MENU: number = 0;
         public static SLOT_MACHINE: number = 1;
         public static GAME_OVER: number = 2;
     }
     
-    
-    // Screen Constants
+    /**
+     * Screen Constants 
+     * 
+     * @export
+     * @class Screen
+     */
     export class Screen {
         public static WIDTH: number = 640;
         public static HEIGHT: number = 480;
         public static CENTER_X: number = 320;
         public static CENTER_Y: number = 240;
     }
-    
-    // Game Constants
+
+    /**
+     * Game Constants 
+     * 
+     * @export
+     * @class Game
+     */
     export class Game {
         public static FPS: number = 60;
     }
 }
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
