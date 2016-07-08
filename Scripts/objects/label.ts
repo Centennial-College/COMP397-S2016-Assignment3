@@ -1,31 +1,43 @@
 ﻿/**
- * File name: label.ts
- * @Author: Kevin Ma
- * Student #: 300867968
- * @Date: July 2, 2016
- * 
- * @Description: This class is used as a GUI control that displays text.
- * 
- * Version: 0.12 - updated UI, implemented betting and spinning mechanism
+ * @author Kevin Ma kma45@my.centennialcollge.ca
+ * @studentID 300867968
+ * @date July 8, 2016
+ * @description This file is the prototype for a GUI control that displays text.
+ * @version 0.15.05 - added comments to label.ts
  */
 
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 /**
- * Provides the base Object namespace
+ * This is the generic objects namespace
  * 
  * @module objects
  */
 module objects {
     /**
-     * A utility used to create GUI labels
+     * This simple Label class extends the createjs.Text object.
+     * A Label may be centered by setting true into isCentered constructor parameter
      * 
+     * @export
      * @class Label
-     * @extends createjs.Text
+     * @extends {createjs.Text}
      */
     export class Label extends createjs.Text {
-        // CONSTRUCTOR METHOD +++++++++++++++++++++++++++++++++++
+        // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        /**
+         * Creates an instance of Label.
+         * 
+         * @param {string} labelString
+         * @param {string} labelFont
+         * @param {string} labelColour
+         * @param {number} x
+         * @param {number} y
+         * @param {boolean} isCentered
+         */
         constructor(labelString: string, labelFont: string, labelColour: string, x: number, y: number, isCentered: boolean) {
             super(labelString, labelFont, labelColour);
 
+            // Check if user wants to change regX and regY values to the center 
             if (isCentered) {
                 this.regX = this.getBounds().width * 0.5;
                 this.regY = this.getBounds().height * 0.5;
@@ -36,3 +48,5 @@ module objects {
         }
     }
 } 
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
