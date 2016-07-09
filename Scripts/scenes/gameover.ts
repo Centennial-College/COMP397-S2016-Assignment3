@@ -1,40 +1,48 @@
 /**
- * File name: gameover.ts
- * @Author: Kevin Ma
- * Student #: 300867968
- * @Date: July 2, 2016
- * 
- * @Description: This class is used as a game over scene for the game.
- * 
- * Version: 0.12 - updated UI, implemented betting and spinning mechanism
+ * @file gameover.ts
+ * @author Kevin Ma kma45@my.centennialcollge.ca
+ * @studentID 300867968
+ * @date July 9, 2016
+ * @description This file is the prototype for a gameover scene in a game.
+ * @version 0.15.07 - added comments to gameover.ts
  */
 
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 /**
- * Provides the base Scene namespace
+ * This is the generic scenes namespace
  * 
  * @module scenes
  */
-// GAME_OVER SCENE
 module scenes {
     /**
-     * Emulates the game over scene for the game.
+     * This GameOver scene extends the objects.Scene object 
      * 
+     * @export
      * @class GameOver
-     * @extends objects.Scene
+     * @extends {objects.Scene}
      */
     export class GameOver extends objects.Scene {
-        //PRIVATE INSTANCE VARIABLES ++++++++++++
+        //PRIVATE INSTANCE VARIABLES ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         private _startOverButton: objects.Button;
         private _gameOverLabel: objects.Label;
 
-        // CONSTRUCTOR ++++++++++++++++++++++
+        // CONSTRUCTOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        /**
+         * Creates an instance of GameOver.
+         */
         constructor() {
             super();
         }
 
-        // PUBLIC METHODS +++++++++++++++++++++
-
-        // Start Method
+        // PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        /**
+         * This method adds game objects to the gameover scene
+         * 
+         * @public
+         * @method start
+         * @returns {void}
+         */
         public start(): void {
 
             // add the GAME OVER Label to the GAME_OVER scene
@@ -53,22 +61,33 @@ module scenes {
                 config.Screen.CENTER_Y + 80, true);
             this.addChild(this._startOverButton);
 
-            // START Button event listener
+            // Attach a click event listener to the START Button 
             this._startOverButton.on("click", this._startOverButtonClick, this);
 
             // add this scene to the global stage container
             stage.addChild(this);
         }
 
-        // GAME_OVER Scene updates here
+        /**
+         * Update game objects in the gameover scene
+         * 
+         * @public
+         * @method update
+         * @returns {void}
+         */
         public update(): void {
 
         }
 
-
-        //EVENT HANDLERS ++++++++++++++++++++
-
-        // START Button click event handler
+        // PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        /**
+         * This is an event handler for the click event
+         * 
+         * @private
+         * @method _startOverButtonClick
+         * @param {createjs.MouseEvent} event
+         * @returns {void}
+         */
         private _startOverButtonClick(event: createjs.MouseEvent) {
             // Switch to the SLOT_MACHINE Scene
             scene = config.Scene.SLOT_MACHINE;
@@ -76,3 +95,5 @@ module scenes {
         }
     }
 }
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
