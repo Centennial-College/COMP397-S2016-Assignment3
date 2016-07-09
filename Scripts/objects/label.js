@@ -1,4 +1,5 @@
 /**
+ * @file label.ts
  * @author Kevin Ma kma45@my.centennialcollge.ca
  * @studentID 300867968
  * @date July 8, 2016

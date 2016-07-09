@@ -1,5 +1,6 @@
 /// <reference path = "_reference.ts" />
 /**
+ * @file game.ts
  * @author Kevin Ma kma45@my.centennialcollege.ca
  * @studentID 300867968
  * @date: July 8, 2016
