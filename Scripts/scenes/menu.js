@@ -1,39 +1,48 @@
 /**
- * File name: menu.ts
- * @Author: Kevin Ma
- * Student #: 300867968
- * @Date: July 2, 2016
- *
- * @Description: This class is used as a menu scene to the game.
- *
- * Version: 0.12 - updated UI, implemented betting and spinning mechanism
+ * @file menu.ts
+ * @author Kevin Ma kma45@my.centennialcollge.ca
+ * @studentID 300867968
+ * @date July 9, 2016
+ * @description This file is the prototype for a menu scene in a game.
+ * @version 0.15.08 - added comments to menu.ts
  */
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Provides the base Scene namespace
+ * This is the generic scenes namespace
  *
  * @module scenes
  */
 var scenes;
 (function (scenes) {
     /**
-     * Emulates the menu scene for the game.
+     * This Menu scene extends the objects.Scene object
      *
-     * @class Menu
-     * @extends objects.Scene
+     * @export
+     * @class GameOver
+     * @extends {objects.Scene}
      */
     var Menu = (function (_super) {
         __extends(Menu, _super);
-        // CONSTRUCTOR ++++++++++++++++++++++
+        // CONSTRUCTOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        /**
+         * Creates an instance of Menu.
+         */
         function Menu() {
             _super.call(this);
         }
-        // PUBLIC METHODS +++++++++++++++++++++
-        // Start Method
+        // PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        /**
+         * This method adds game objects to the menu scene
+         *
+         * @public
+         * @method start
+         * @returns {void}
+         */
         Menu.prototype.start = function () {
             // add the WELCOME Label to the MENU scene
             this._welcomeLabel = new objects.Label("SLOT MACHINE", "60px Consolas", "#000", config.Screen.CENTER_X, config.Screen.CENTER_Y, true);
@@ -50,11 +59,24 @@ var scenes;
             // add this scene to the global stage container
             stage.addChild(this);
         };
-        // MENU Scene updates here
+        /**
+         * Update game objects in the gameover scene
+         *
+         * @public
+         * @method update
+         * @returns {void}
+         */
         Menu.prototype.update = function () {
         };
-        //EVENT HANDLERS ++++++++++++++++++++
-        // START Button click event handler
+        // PRIVATE METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        /**
+         * This is an event handler for the click event
+         *
+         * @private
+         * @method _startOverButtonClick
+         * @param {createjs.MouseEvent} event
+         * @returns {void}
+         */
         Menu.prototype._startButtonClick = function (event) {
             // FadeOut
             this._fadeOut(500, function () {
@@ -67,4 +89,5 @@ var scenes;
     }(objects.Scene));
     scenes.Menu = Menu;
 })(scenes || (scenes = {}));
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 //# sourceMappingURL=menu.js.map

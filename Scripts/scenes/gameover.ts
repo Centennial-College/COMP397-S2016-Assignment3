@@ -79,7 +79,7 @@ module scenes {
 
         }
 
-        // PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // PRIVATE METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         /**
          * This is an event handler for the click event
          * 

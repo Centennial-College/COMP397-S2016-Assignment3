@@ -64,7 +64,7 @@ var scenes;
          */
         GameOver.prototype.update = function () {
         };
-        // PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // PRIVATE METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         /**
          * This is an event handler for the click event
          *
