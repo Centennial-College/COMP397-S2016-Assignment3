@@ -3,7 +3,7 @@
  * @author Kevin Ma kma45@my.centennialcollge.ca
  * @studentID 300867968
  * @date July 9, 2016
- * @description This file is the prototype for a gameover scene in a game.
+ * @description This file is the gameover scene for the game.
  * @version 0.15.07 - added comments to gameover.ts
  */
 

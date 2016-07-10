@@ -3,7 +3,7 @@
  * @author Kevin Ma kma45@my.centennialcollge.ca
  * @studentID 300867968
  * @date July 9, 2016
- * @description This file is the prototype for a menu scene in a game.
+ * @description This file is the menu scene for the game.
  * @version 0.15.08 - added comments to menu.ts
  */
 

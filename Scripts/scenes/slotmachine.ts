@@ -1,46 +1,53 @@
 /**
- * File name: slotmachine.ts
- * @Author: Kevin Ma
- * Student #: 300867968
- * @Date: July 4, 2016
- * 
- * @Description: This typescript file contains all the code required to emulate a 
- * web slot machine game interface.
- * 
- * Version: 0.15 - redesigned UI to accomodate 5 reels and additional reset and quit buttons
+ * @file slotmachine.ts
+ * @author Kevin Ma kma45@my.centennialcollge.ca
+ * @studentID 300867968
+ * @date July 9, 2016
+ * @description This file is the main game scene for the game
+ * @version 0.15.09 - added comments to slotmachine.ts and replaced all var with let 
  */
 
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 /**
- * Provides the base Scene namespace
+ * This is the generic scenes namespace
  * 
  * @module scenes
  */
 module scenes {
     /**
-      * Emulates the slot machine scene for the game where most of the action occurs.
-      * 
-      * @class SlotMachine
-      * @extends objects.Scene
-      */
+     * This SlotMachine scene extends the objects.Scene object 
+     * 
+     * @export
+     * @class SlotMachine
+     * @extends {objects.Scene}
+     */
     export class SlotMachine extends objects.Scene {
-        //PRIVATE INSTANCE VARIABLES ++++++++++++++++++++++++++++++++++++++++++++++++
+        //PRIVATE INSTANCE VARIABLES ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         private _backgroundImage: createjs.Bitmap;
+        private _reels: createjs.Bitmap[];
+
+        // buttons on the slot machine
         private _bet1Button: objects.Button;
         private _bet10Button: objects.Button;
         private _bet100Button: objects.Button;
         private _spinButton: objects.Button;
         private _resetButton: objects.Button;
         private _cashOutButton: objects.Button;
-        private _reels: createjs.Bitmap[];
+
+        // display labels on the slot machine
         private _jackPotText: objects.Label;
         private _creditsText: objects.Label;
         private _betText: objects.Label;
         private _resultText: objects.Label;
+
+        // player stats
         private _playerMoney: number;
         private _winnings: number;
         private _jackpot: number;
         private _playerBet: number;
 
+        // fruit tally
         private _grapes: number;
         private _bananas: number;
         private _oranges: number;
@@ -50,16 +57,25 @@ module scenes {
         private _sevens: number;
         private _blanks: number;
 
-        // CONSTRUCTOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // CONSTRUCTOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        /**
+         * Creates an instance of SlotMachine.
+         */
         constructor() {
             super();
         }
 
-        // PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // Start Method
+        // PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        /**
+         * This method adds game objects to the slotmachine scene
+         * 
+         * @public
+         * @method start
+         * @returns {void}
+         */
         public start(): void {
             // Reset the Game to initialize values
-            this._resetAll();
+            this._resetPlayerStats();
             this._resetFruitTally();
 
             // add background image to the scene
@@ -149,7 +165,13 @@ module scenes {
             stage.addChild(this);
         }
 
-        // SLOT_MACHINE Scene updates here
+        /**
+         * Update game objects in the slotmachine scene
+         * 
+         * @public
+         * @method update
+         * @returns {void}
+         */
         public update(): void {
             // By default all buttons are enabled
             this._enableAllButtons();
@@ -171,58 +193,87 @@ module scenes {
             }
         }
 
-        // PRIVATE METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        /* Utility function to check if a value falls within a range of bounds */
+        // PRIVATE METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        /**
+         * Utility function to check if a value falls within a specified range.
+         * 
+         * @private
+         * @method _checkRange
+         * @param {number} value
+         * @param {number} lowerBounds
+         * @param {number} upperBounds
+         * @returns {number}
+         */
         private _checkRange(value: number, lowerBounds: number, upperBounds: number): number {
             return (value >= lowerBounds && value <= upperBounds) ? value : -1;
         }
 
-        /* Utility function to reset the player stats */
-        private _resetAll() {
+        /**
+         * Utility function to reset the player's stats
+         * 
+         * @private
+         * @method _resetPlayerStats
+         * @returns {void}
+         */
+        private _resetPlayerStats(): void {
             this._playerMoney = 1000;
             this._winnings = 0;
             this._jackpot = 5000;
             this._playerBet = 0;
         }
 
-        /* When this function is called it determines the betLine results.
-        e.g. Bar - Orange - Banana */
+        /**
+         * Determines the betLine results.
+         * e.g. Bar - Orange - Banana - Seven - Blank
+         * 
+         * @private
+         * @method _spinReels
+         * @returns {string[]}
+         */
         private _spinReels(): string[] {
-            var betLine = [" ", " ", " ", " ", " "];
-            var outCome = [0, 0, 0, 0, 0];
 
-            for (var spin = 0; spin < 5; spin++) {
-                outCome[spin] = Math.floor((Math.random() * 65) + 1);
-                switch (outCome[spin]) {
-                    case this._checkRange(outCome[spin], 1, 27):  // 41.5% probability
+            // declaring temporary storage of the betline results
+            let betLine: string[] = [" ", " ", " ", " ", " "];
+
+            // declaring storage for random number
+            let outCome: number = 0;
+
+            // determine the betline results for each reel based on random number generator
+            for (let spin: number = 0; spin < 5; spin++) {
+
+                // Assigns outCome a random number between 1 and 65
+                outCome = Math.floor((Math.random() * 65) + 1);
+
+                switch (outCome) {
+                    case this._checkRange(outCome, 1, 27):  // 41.5% probability
                         betLine[spin] = "Blank";
                         this._blanks++;
                         break;
-                    case this._checkRange(outCome[spin], 28, 37): // 15.4% probability
+                    case this._checkRange(outCome, 28, 37): // 15.4% probability
                         betLine[spin] = "Grapes";
                         this._grapes++;
                         break;
-                    case this._checkRange(outCome[spin], 38, 46): // 13.8% probability
+                    case this._checkRange(outCome, 38, 46): // 13.8% probability
                         betLine[spin] = "Banana";
                         this._bananas++;
                         break;
-                    case this._checkRange(outCome[spin], 47, 54): // 12.3% probability
+                    case this._checkRange(outCome, 47, 54): // 12.3% probability
                         betLine[spin] = "Orange";
                         this._oranges++;
                         break;
-                    case this._checkRange(outCome[spin], 55, 59): //  7.7% probability
+                    case this._checkRange(outCome, 55, 59): //  7.7% probability
                         betLine[spin] = "Cherry";
                         this._cherries++;
                         break;
-                    case this._checkRange(outCome[spin], 60, 62): //  4.6% probability
+                    case this._checkRange(outCome, 60, 62): //  4.6% probability
                         betLine[spin] = "Bar";
                         this._bars++;
                         break;
-                    case this._checkRange(outCome[spin], 63, 64): //  3.1% probability
+                    case this._checkRange(outCome, 63, 64): //  3.1% probability
                         betLine[spin] = "Bell";
                         this._bells++;
                         break;
-                    case this._checkRange(outCome[spin], 65, 65): //  1.5% probability
+                    case this._checkRange(outCome, 65, 65): //  1.5% probability
                         betLine[spin] = "Seven";
                         this._sevens++;
                         break;
@@ -231,7 +282,13 @@ module scenes {
             return betLine;
         }
 
-        /* This function calculates the player's winnings, if any */
+        /**
+         * This function calculates the player's winnings, if any  
+         * 
+         * @private
+         * @method _determineWinnings
+         * @returns {void}
+         */
         private _determineWinnings(): void {
             if (this._blanks == 0) {
                 // 5 matches 
@@ -341,7 +398,13 @@ module scenes {
             this._resetFruitTally();
         }
 
-        /* Utility function to reset the fruit tally counters */
+        /**
+         * Utility function to reset the fruit tally counters
+         * 
+         * @private
+         * @method _resetFruitTally
+         * @returns {void}
+         */
         private _resetFruitTally(): void {
             this._grapes = 0;
             this._bananas = 0;
@@ -353,36 +416,51 @@ module scenes {
             this._blanks = 0;
         }
 
-        /* Utility function that initializes the bitmap array with 3 blank reels */
+        /**
+         * Utility function that initializes the bitmap array with 5 blank reels
+         * 
+         * @private
+         * @method _initializeBitMapArray
+         * @returns {void}
+         */
         private _initializeBitMapArray(): void {
             this._reels = new Array<createjs.Bitmap>();
-            for (var reel: number = 0; reel < 5; reel++) {
-                this._reels[reel] = new createjs.Bitmap(assets.getResult("Blank"));
-                // can't do this._reels[reel].x = 138 + (82 * reel)
+            for (let reelIndex: number = 0; reelIndex < 5; reelIndex++) {
+                this._reels[reelIndex] = new createjs.Bitmap(assets.getResult("Blank"));
+                // can't do this._reels[reelIndex].x = 138 + (82 * reelIndex)
                 // because not all +82, some +79, some + 84
-                switch (reel) {
+                switch (reelIndex) {
                     case 0:
-                        this._reels[reel].x = 138;
+                        this._reels[reelIndex].x = 138;
                         break;
                     case 1:
-                        this._reels[reel].x = 217;
+                        this._reels[reelIndex].x = 217;
                         break;
                     case 2:
-                        this._reels[reel].x = 301;
+                        this._reels[reelIndex].x = 301;
                         break;
                     case 3:
-                        this._reels[reel].x = 385;
+                        this._reels[reelIndex].x = 385;
                         break;
                     case 4:
-                        this._reels[reel].x = 464;
+                        this._reels[reelIndex].x = 464;
                         break;
                 }
-                this._reels[reel].y = 230;
-                this.addChild(this._reels[reel]);
-                console.log("reel" + reel + " " + this._reels[reel]);
+                this._reels[reelIndex].y = 230;
+                this.addChild(this._reels[reelIndex]);
+                console.log("reel" + reelIndex + " " + this._reels[reelIndex]);
             }
         }
 
+        /**
+         * Adds the parameter playerBet to the _playerBet, and deducts
+         * from _playerMoney
+         * 
+         * @private
+         * @method _makeBet
+         * @param {number} playerBet
+         * @returns {void}
+         */
         private _makeBet(playerBet: number): void {
             this._playerBet += playerBet;
             this._playerMoney -= playerBet;
@@ -391,7 +469,13 @@ module scenes {
             console.log('Bet ' + playerBet + ' Credit.');
         }
 
-        /* Utility function to enable all buttons currently disabled */
+        /**
+         * Utility function to enable all buttons currently disabled
+         * 
+         * @private
+         * @method _enableAllButtons
+         * @returns {void}
+         */
         private _enableAllButtons(): void {
             if (!this._bet1Button.mouseEnabled)
                 this._bet1Button.EnableButton();
@@ -407,26 +491,59 @@ module scenes {
         }
 
         //EVENT HANDLERS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        /**
+         * This is an event handler for the _bet1Button's mouse click event.
+         * 
+         * @private
+         * @method _bet1ButtonClick
+         * @param {createjs.MouseEvent} event
+         * @returns {void}
+         */
         private _bet1ButtonClick(event: createjs.MouseEvent): void {
             this._makeBet(1);
         }
 
+        /**
+         * This is an event handler for the _bet10Button's mouse click event.
+         * 
+         * @private
+         * @method _bet10ButtonClick
+         * @param {createjs.MouseEvent} event
+         * @returns {void}
+         */
         private _bet10ButtonClick(event: createjs.MouseEvent): void {
             this._makeBet(10);
         }
 
+        /**
+         * This is an event handler for the _bet100Button's mouse click event.
+         * 
+         * @private
+         * @method _bet100ButtonClick
+         * @param {createjs.MouseEvent} event
+         * @returns {void}
+         */
         private _bet100ButtonClick(event: createjs.MouseEvent): void {
             this._makeBet(100);
         }
 
+        /**
+         * This is an event handler for the _spinButton's mouse click event
+         * 
+         * @private
+         * @method _spinButtonClick
+         * @param {createjs.MouseEvent} event
+         * @returns {void}
+         */
         private _spinButtonClick(event: createjs.MouseEvent): void {
             // resets the winnings before each spin
             this._winnings = 0;
 
-            var bitmap: string[] = this._spinReels();
+            // Determine the outcomes of the reels
+            let bitmap: string[] = this._spinReels();
 
-            for (var reel: number = 0; reel < 5; reel++) {
-                this._reels[reel].image = assets.getResult(bitmap[reel]);
+            for (let reelIndex: number = 0; reelIndex < 5; reelIndex++) {
+                this._reels[reelIndex].image = assets.getResult(bitmap[reelIndex]);
             }
 
             // calculate the winnings for the current spin
@@ -437,12 +554,30 @@ module scenes {
             this._betText.text = this._playerBet.toString();
         }
 
+        /**
+         * This is an event handler for the _resetButton's mouse click event.
+         * 
+         * @private
+         * @method _resetButtonClick
+         * @param {createjs.MouseEvent} event
+         * @returns {void}
+         */
         private _resetButtonClick(event: createjs.MouseEvent): void {
 
         }
 
+        /**
+         * This is an event handler for the _cashOutButton's click event.
+         * 
+         * @private
+         * @method _cashOutButtonClick
+         * @param {createjs.MouseEvent} event
+         * @returns {void}
+         */
         private _cashOutButtonClick(event: createjs.MouseEvent): void {
 
         }
     }
 }
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

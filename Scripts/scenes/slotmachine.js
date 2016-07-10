@@ -1,43 +1,51 @@
 /**
- * File name: slotmachine.ts
- * @Author: Kevin Ma
- * Student #: 300867968
- * @Date: July 4, 2016
- *
- * @Description: This typescript file contains all the code required to emulate a
- * web slot machine game interface.
- *
- * Version: 0.15 - redesigned UI to accomodate 5 reels and additional reset and quit buttons
+ * @file slotmachine.ts
+ * @author Kevin Ma kma45@my.centennialcollge.ca
+ * @studentID 300867968
+ * @date July 9, 2016
+ * @description This file is the main game scene for the game
+ * @version 0.15.09 - added comments to slotmachine.ts and replaced all var with let
  */
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Provides the base Scene namespace
+ * This is the generic scenes namespace
  *
  * @module scenes
  */
 var scenes;
 (function (scenes) {
     /**
-      * Emulates the slot machine scene for the game where most of the action occurs.
-      *
-      * @class SlotMachine
-      * @extends objects.Scene
-      */
+     * This SlotMachine scene extends the objects.Scene object
+     *
+     * @export
+     * @class SlotMachine
+     * @extends {objects.Scene}
+     */
     var SlotMachine = (function (_super) {
         __extends(SlotMachine, _super);
-        // CONSTRUCTOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // CONSTRUCTOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        /**
+         * Creates an instance of SlotMachine.
+         */
         function SlotMachine() {
             _super.call(this);
         }
-        // PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // Start Method
+        // PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        /**
+         * This method adds game objects to the slotmachine scene
+         *
+         * @public
+         * @method start
+         * @returns {void}
+         */
         SlotMachine.prototype.start = function () {
             // Reset the Game to initialize values
-            this._resetAll();
+            this._resetPlayerStats();
             this._resetFruitTally();
             // add background image to the scene
             this._backgroundImage = new createjs.Bitmap(assets.getResult("SlotMachine"));
@@ -91,7 +99,13 @@ var scenes;
             // add this scene to the global stage container
             stage.addChild(this);
         };
-        // SLOT_MACHINE Scene updates here
+        /**
+         * Update game objects in the slotmachine scene
+         *
+         * @public
+         * @method update
+         * @returns {void}
+         */
         SlotMachine.prototype.update = function () {
             // By default all buttons are enabled
             this._enableAllButtons();
@@ -110,55 +124,80 @@ var scenes;
                 this._spinButton.DisableButton();
             }
         };
-        // PRIVATE METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        /* Utility function to check if a value falls within a range of bounds */
+        // PRIVATE METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        /**
+         * Utility function to check if a value falls within a specified range.
+         *
+         * @private
+         * @method _checkRange
+         * @param {number} value
+         * @param {number} lowerBounds
+         * @param {number} upperBounds
+         * @returns {number}
+         */
         SlotMachine.prototype._checkRange = function (value, lowerBounds, upperBounds) {
             return (value >= lowerBounds && value <= upperBounds) ? value : -1;
         };
-        /* Utility function to reset the player stats */
-        SlotMachine.prototype._resetAll = function () {
+        /**
+         * Utility function to reset the player's stats
+         *
+         * @private
+         * @method _resetPlayerStats
+         * @returns {void}
+         */
+        SlotMachine.prototype._resetPlayerStats = function () {
             this._playerMoney = 1000;
             this._winnings = 0;
             this._jackpot = 5000;
             this._playerBet = 0;
         };
-        /* When this function is called it determines the betLine results.
-        e.g. Bar - Orange - Banana */
+        /**
+         * Determines the betLine results.
+         * e.g. Bar - Orange - Banana - Seven - Blank
+         *
+         * @private
+         * @method _spinReels
+         * @returns {string[]}
+         */
         SlotMachine.prototype._spinReels = function () {
+            // declaring temporary storage of the betline results
             var betLine = [" ", " ", " ", " ", " "];
-            var outCome = [0, 0, 0, 0, 0];
+            // declaring storage for random number
+            var outCome = 0;
+            // determine the betline results for each reel based on random number generator
             for (var spin = 0; spin < 5; spin++) {
-                outCome[spin] = Math.floor((Math.random() * 65) + 1);
-                switch (outCome[spin]) {
-                    case this._checkRange(outCome[spin], 1, 27):
+                // Assigns outCome a random number between 1 and 65
+                outCome = Math.floor((Math.random() * 65) + 1);
+                switch (outCome) {
+                    case this._checkRange(outCome, 1, 27):
                         betLine[spin] = "Blank";
                         this._blanks++;
                         break;
-                    case this._checkRange(outCome[spin], 28, 37):
+                    case this._checkRange(outCome, 28, 37):
                         betLine[spin] = "Grapes";
                         this._grapes++;
                         break;
-                    case this._checkRange(outCome[spin], 38, 46):
+                    case this._checkRange(outCome, 38, 46):
                         betLine[spin] = "Banana";
                         this._bananas++;
                         break;
-                    case this._checkRange(outCome[spin], 47, 54):
+                    case this._checkRange(outCome, 47, 54):
                         betLine[spin] = "Orange";
                         this._oranges++;
                         break;
-                    case this._checkRange(outCome[spin], 55, 59):
+                    case this._checkRange(outCome, 55, 59):
                         betLine[spin] = "Cherry";
                         this._cherries++;
                         break;
-                    case this._checkRange(outCome[spin], 60, 62):
+                    case this._checkRange(outCome, 60, 62):
                         betLine[spin] = "Bar";
                         this._bars++;
                         break;
-                    case this._checkRange(outCome[spin], 63, 64):
+                    case this._checkRange(outCome, 63, 64):
                         betLine[spin] = "Bell";
                         this._bells++;
                         break;
-                    case this._checkRange(outCome[spin], 65, 65):
+                    case this._checkRange(outCome, 65, 65):
                         betLine[spin] = "Seven";
                         this._sevens++;
                         break;
@@ -166,7 +205,13 @@ var scenes;
             }
             return betLine;
         };
-        /* This function calculates the player's winnings, if any */
+        /**
+         * This function calculates the player's winnings, if any
+         *
+         * @private
+         * @method _determineWinnings
+         * @returns {void}
+         */
         SlotMachine.prototype._determineWinnings = function () {
             if (this._blanks == 0) {
                 // 5 matches 
@@ -271,7 +316,13 @@ var scenes;
             this._creditsText.text = this._playerMoney.toString();
             this._resetFruitTally();
         };
-        /* Utility function to reset the fruit tally counters */
+        /**
+         * Utility function to reset the fruit tally counters
+         *
+         * @private
+         * @method _resetFruitTally
+         * @returns {void}
+         */
         SlotMachine.prototype._resetFruitTally = function () {
             this._grapes = 0;
             this._bananas = 0;
@@ -282,35 +333,50 @@ var scenes;
             this._sevens = 0;
             this._blanks = 0;
         };
-        /* Utility function that initializes the bitmap array with 3 blank reels */
+        /**
+         * Utility function that initializes the bitmap array with 5 blank reels
+         *
+         * @private
+         * @method _initializeBitMapArray
+         * @returns {void}
+         */
         SlotMachine.prototype._initializeBitMapArray = function () {
             this._reels = new Array();
-            for (var reel = 0; reel < 5; reel++) {
-                this._reels[reel] = new createjs.Bitmap(assets.getResult("Blank"));
-                // can't do this._reels[reel].x = 138 + (82 * reel)
+            for (var reelIndex = 0; reelIndex < 5; reelIndex++) {
+                this._reels[reelIndex] = new createjs.Bitmap(assets.getResult("Blank"));
+                // can't do this._reels[reelIndex].x = 138 + (82 * reelIndex)
                 // because not all +82, some +79, some + 84
-                switch (reel) {
+                switch (reelIndex) {
                     case 0:
-                        this._reels[reel].x = 138;
+                        this._reels[reelIndex].x = 138;
                         break;
                     case 1:
-                        this._reels[reel].x = 217;
+                        this._reels[reelIndex].x = 217;
                         break;
                     case 2:
-                        this._reels[reel].x = 301;
+                        this._reels[reelIndex].x = 301;
                         break;
                     case 3:
-                        this._reels[reel].x = 385;
+                        this._reels[reelIndex].x = 385;
                         break;
                     case 4:
-                        this._reels[reel].x = 464;
+                        this._reels[reelIndex].x = 464;
                         break;
                 }
-                this._reels[reel].y = 230;
-                this.addChild(this._reels[reel]);
-                console.log("reel" + reel + " " + this._reels[reel]);
+                this._reels[reelIndex].y = 230;
+                this.addChild(this._reels[reelIndex]);
+                console.log("reel" + reelIndex + " " + this._reels[reelIndex]);
             }
         };
+        /**
+         * Adds the parameter playerBet to the _playerBet, and deducts
+         * from _playerMoney
+         *
+         * @private
+         * @method _makeBet
+         * @param {number} playerBet
+         * @returns {void}
+         */
         SlotMachine.prototype._makeBet = function (playerBet) {
             this._playerBet += playerBet;
             this._playerMoney -= playerBet;
@@ -318,7 +384,13 @@ var scenes;
             this._betText.text = this._playerBet.toString();
             console.log('Bet ' + playerBet + ' Credit.');
         };
-        /* Utility function to enable all buttons currently disabled */
+        /**
+         * Utility function to enable all buttons currently disabled
+         *
+         * @private
+         * @method _enableAllButtons
+         * @returns {void}
+         */
         SlotMachine.prototype._enableAllButtons = function () {
             if (!this._bet1Button.mouseEnabled)
                 this._bet1Button.EnableButton();
@@ -330,21 +402,54 @@ var scenes;
                 this._spinButton.EnableButton();
         };
         //EVENT HANDLERS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        /**
+         * This is an event handler for the _bet1Button's mouse click event.
+         *
+         * @private
+         * @method _bet1ButtonClick
+         * @param {createjs.MouseEvent} event
+         * @returns {void}
+         */
         SlotMachine.prototype._bet1ButtonClick = function (event) {
             this._makeBet(1);
         };
+        /**
+         * This is an event handler for the _bet10Button's mouse click event.
+         *
+         * @private
+         * @method _bet10ButtonClick
+         * @param {createjs.MouseEvent} event
+         * @returns {void}
+         */
         SlotMachine.prototype._bet10ButtonClick = function (event) {
             this._makeBet(10);
         };
+        /**
+         * This is an event handler for the _bet100Button's mouse click event.
+         *
+         * @private
+         * @method _bet100ButtonClick
+         * @param {createjs.MouseEvent} event
+         * @returns {void}
+         */
         SlotMachine.prototype._bet100ButtonClick = function (event) {
             this._makeBet(100);
         };
+        /**
+         * This is an event handler for the _spinButton's mouse click event
+         *
+         * @private
+         * @method _spinButtonClick
+         * @param {createjs.MouseEvent} event
+         * @returns {void}
+         */
         SlotMachine.prototype._spinButtonClick = function (event) {
             // resets the winnings before each spin
             this._winnings = 0;
+            // Determine the outcomes of the reels
             var bitmap = this._spinReels();
-            for (var reel = 0; reel < 5; reel++) {
-                this._reels[reel].image = assets.getResult(bitmap[reel]);
+            for (var reelIndex = 0; reelIndex < 5; reelIndex++) {
+                this._reels[reelIndex].image = assets.getResult(bitmap[reelIndex]);
             }
             // calculate the winnings for the current spin
             this._determineWinnings();
@@ -352,12 +457,29 @@ var scenes;
             this._playerBet = 0;
             this._betText.text = this._playerBet.toString();
         };
+        /**
+         * This is an event handler for the _resetButton's mouse click event.
+         *
+         * @private
+         * @method _resetButtonClick
+         * @param {createjs.MouseEvent} event
+         * @returns {void}
+         */
         SlotMachine.prototype._resetButtonClick = function (event) {
         };
+        /**
+         * This is an event handler for the _cashOutButton's click event.
+         *
+         * @private
+         * @method _cashOutButtonClick
+         * @param {createjs.MouseEvent} event
+         * @returns {void}
+         */
         SlotMachine.prototype._cashOutButtonClick = function (event) {
         };
         return SlotMachine;
     }(objects.Scene));
     scenes.SlotMachine = SlotMachine;
 })(scenes || (scenes = {}));
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 //# sourceMappingURL=slotmachine.js.map
