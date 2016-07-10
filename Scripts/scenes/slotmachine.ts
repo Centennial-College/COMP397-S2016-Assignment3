@@ -2,9 +2,9 @@
  * @file slotmachine.ts
  * @author Kevin Ma kma45@my.centennialcollge.ca
  * @studentID 300867968
- * @date July 9, 2016
+ * @date July 10, 2016
  * @description This file is the main game scene for the game
- * @version 0.18.0 - implemented event handler for the cashout/quit button
+ * @version 0.18.01 - resized and centerd canvas using css
  */
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -578,11 +578,13 @@ module scenes {
          * @returns {void}
          */
         private _resetButtonClick(event: createjs.MouseEvent): void {
-            this._resetPlayerStats();
-            this._resetFruitTally();
-            this._reels.forEach(element => {
-                element.image = assets.getResult("Blank");
-            });
+            if (window.confirm("Are you sure you would like to reset the game?")) {
+                this._resetPlayerStats();
+                this._resetFruitTally();
+                this._reels.forEach(element => {
+                    element.image = assets.getResult("Blank");
+                });
+            }
         }
 
         /**
@@ -594,14 +596,12 @@ module scenes {
          * @returns {void}
          */
         private _cashOutButtonClick(event: createjs.MouseEvent): void {
-            if(window.confirm("Are you sure you would like to quit the game?"))
-            {
+            if (window.confirm("Are you sure you would like to quit the game?")) {
                 window.alert("Thank you for playing Reel of Revolution!");
                 window.close();
             }
-            else
-            {
-                window.alert("Best of Luck!");
+            else {
+                window.alert("Best of Luck Spinning the Reels!");
             }
         }
     }

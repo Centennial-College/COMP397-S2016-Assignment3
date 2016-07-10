@@ -2,9 +2,9 @@
  * @file slotmachine.ts
  * @author Kevin Ma kma45@my.centennialcollge.ca
  * @studentID 300867968
- * @date July 9, 2016
+ * @date July 10, 2016
  * @description This file is the main game scene for the game
- * @version 0.18.0 - implemented event handler for the cashout/quit button
+ * @version 0.18.01 - resized and centerd canvas using css
  */
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -477,11 +477,13 @@ var scenes;
          * @returns {void}
          */
         SlotMachine.prototype._resetButtonClick = function (event) {
-            this._resetPlayerStats();
-            this._resetFruitTally();
-            this._reels.forEach(function (element) {
-                element.image = assets.getResult("Blank");
-            });
+            if (window.confirm("Are you sure you would like to reset the game?")) {
+                this._resetPlayerStats();
+                this._resetFruitTally();
+                this._reels.forEach(function (element) {
+                    element.image = assets.getResult("Blank");
+                });
+            }
         };
         /**
          * This is an event handler for the _cashOutButton's click event.
@@ -497,7 +499,7 @@ var scenes;
                 window.close();
             }
             else {
-                window.alert("Best of Luck!");
+                window.alert("Best of Luck Spinning the Reels!");
             }
         };
         return SlotMachine;

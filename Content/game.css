@@ -1,16 +1,33 @@
-﻿body {
+﻿/**
+ * @file game.css
+ * @author Kevin Ma kma45@my.centennialcollge.ca
+ * @studentID 300867968
+ * @date July 10, 2016
+ * @description This file is the main styling sheet for the game
+ * @version 0.18.01 - resized and centerd canvas using css
+ */
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+body {
     background-color: darkgray;
 }
 
 canvas {
+    width: 70vw;
+    margin: 0 3vw;
     border: 1px solid black;
     border-radius: 10px;
     text-align: center;
-    margin-left: 10%;
     background-color: white;
 }
 
 .game {
-    width: 80%;
+    width: 80vw;
     margin: 0 auto;
+    /*background-color: blue;*/
+    /*margin-right: auto;*/
+    /*margin-left: auto;*/
 }
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
