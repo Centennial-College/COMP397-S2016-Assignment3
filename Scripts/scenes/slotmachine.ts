@@ -4,7 +4,7 @@
  * @studentID 300867968
  * @date July 10, 2016
  * @description This file is the main game scene for the game
- * @version 0.18.02 - changed _cashOutButtonClick function to work on all browsers 
+ * @version 0.18.03 - changed update method (players should be able to quit/cashout even if 0 credits)
  */
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -190,11 +190,6 @@ module scenes {
             // Spin button is diabled until player makes a bet
             if (this._playerBet == 0) {
                 this._spinButton.DisableButton();
-            }
-
-            // CashOut Button is disabled when the player has no credits remaining
-            if (this._playerMoney == 0) {
-                this._cashOutButton.DisableButton();
             }
 
             // Update the game labels every tick of the game loop
