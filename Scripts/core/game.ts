@@ -6,7 +6,7 @@
  * @studentID 300867968
  * @date: July 8, 2016
  * @description: This file is the entry point for the game.
- * @version 0.15.01 - added comments and replaced all var declarations with let to game.ts
+ * @version 0.16.0 - replaced all text-based reel images with graphics
  */
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -41,7 +41,7 @@ let assetData: objects.Asset[] = [
     { id: "WhiteBackground", src: "../../Assets/images/WhiteBackground.png" },
     { id: "Blank", src: "../../Assets/images/Blank.png" },
     { id: "Grapes", src: "../../Assets/images/Grapes.png" },
-    { id: "Banana", src: "../../Assets/images/Banana.png" },
+    { id: "Watermelon", src: "../../Assets/images/Watermelon.png" },
     { id: "Orange", src: "../../Assets/images/Orange.png" },
     { id: "Cherry", src: "../../Assets/images/Cherry.png" },
     { id: "Bar", src: "../../Assets/images/Bar.png" },

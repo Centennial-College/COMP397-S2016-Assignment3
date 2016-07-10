@@ -4,7 +4,7 @@
  * @studentID 300867968
  * @date July 9, 2016
  * @description This file is the main game scene for the game
- * @version 0.15.09 - added comments to slotmachine.ts and replaced all var with let 
+ * @version 0.16.0 - replaced all text-based reel images with graphics
  */
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -49,7 +49,7 @@ module scenes {
 
         // fruit tally
         private _grapes: number;
-        private _bananas: number;
+        private _watermelons: number;
         private _oranges: number;
         private _cherries: number;
         private _bars: number;
@@ -224,7 +224,7 @@ module scenes {
 
         /**
          * Determines the betLine results.
-         * e.g. Bar - Orange - Banana - Seven - Blank
+         * e.g. Bar - Orange - Watermelon - Seven - Blank
          * 
          * @private
          * @method _spinReels
@@ -254,8 +254,8 @@ module scenes {
                         this._grapes++;
                         break;
                     case this._checkRange(outCome, 38, 46): // 13.8% probability
-                        betLine[spin] = "Banana";
-                        this._bananas++;
+                        betLine[spin] = "Watermelon";
+                        this._watermelons++;
                         break;
                     case this._checkRange(outCome, 47, 54): // 12.3% probability
                         betLine[spin] = "Orange";
@@ -295,7 +295,7 @@ module scenes {
                 if (this._grapes == 5) {
                     this._winnings = this._playerBet * 10;
                 }
-                else if (this._bananas == 5) {
+                else if (this._watermelons == 5) {
                     this._winnings = this._playerBet * 20;
                 }
                 else if (this._oranges == 5) {
@@ -317,7 +317,7 @@ module scenes {
                 else if (this._grapes == 4) {
                     this._winnings = this._playerBet * 6;
                 }
-                else if (this._bananas == 4) {
+                else if (this._watermelons == 4) {
                     this._winnings = this._playerBet * 6;
                 }
                 else if (this._oranges == 4) {
@@ -339,7 +339,7 @@ module scenes {
                 else if (this._grapes == 3) {
                     this._winnings = this._playerBet * 3;
                 }
-                else if (this._bananas == 3) {
+                else if (this._watermelons == 3) {
                     this._winnings = this._playerBet * 3;
                 }
                 else if (this._oranges == 3) {
@@ -361,7 +361,7 @@ module scenes {
                 else if (this._grapes == 2) {
                     this._winnings = this._playerBet * 2;
                 }
-                else if (this._bananas == 2) {
+                else if (this._watermelons == 2) {
                     this._winnings = this._playerBet * 2;
                 }
                 else if (this._oranges == 2) {
@@ -385,11 +385,17 @@ module scenes {
                 else {
                     this._winnings = this._playerBet * 1;
                 }
+                console.log("++++++++++++++++++++++");
                 console.log('Win!');
-                console.log('Won : ' + this._winnings);
+                console.log('Won : ' + this._winnings + " Credits");
+                console.log("++++++++++++++++++++++");
+
             }
             else {
+                console.log("----------------------");
                 console.log('Loss!');
+                console.log("There was at least one blank.");
+                console.log("----------------------");
             }
 
             this._resultText.text = this._winnings.toString();  //results = winnings
@@ -407,7 +413,7 @@ module scenes {
          */
         private _resetFruitTally(): void {
             this._grapes = 0;
-            this._bananas = 0;
+            this._watermelons = 0;
             this._oranges = 0;
             this._cherries = 0;
             this._bars = 0;
