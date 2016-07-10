@@ -21,6 +21,7 @@
     "PreloadJS": "^0.6.2",
     "SoundJS": "^0.6.2",
     "TweenJS": "^0.6.2",
-    "stats.js": "*"
+    "stats.js": "*",
+    "font-awesome": "fontawesome#^4.6.3"
   }
 }

@@ -4,7 +4,7 @@
  * @studentID 300867968
  * @date July 9, 2016
  * @description This file is the main game scene for the game
- * @version 0.17.0 - implemented event handler for the reset button
+ * @version 0.18.0 - implemented event handler for the cashout/quit button
  */
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -594,7 +594,15 @@ module scenes {
          * @returns {void}
          */
         private _cashOutButtonClick(event: createjs.MouseEvent): void {
-
+            if(window.confirm("Are you sure you would like to quit the game?"))
+            {
+                window.alert("Thank you for playing Reel of Revolution!");
+                window.close();
+            }
+            else
+            {
+                window.alert("Best of Luck!");
+            }
         }
     }
 }
