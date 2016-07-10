@@ -4,7 +4,7 @@
  * @studentID 300867968
  * @date July 10, 2016
  * @description This file is the main game scene for the game
- * @version 0.18.04 - updated typings from tsd to typings
+ * @version 0.18.03 - changed update method (players should be able to quit/cashout even if 0 credits)
  */
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -502,10 +502,6 @@ var scenes;
             else {
                 window.alert("Best of Luck Spinning the Reels!");
             }
-        };
-        SlotMachine.prototype._createAndAddModal = function (title, content, elementID) {
-            var modal = '<!-- Modal --><div id=' + elementID + ' class="modal fade" role="dialog"><div class="modal-dialog"><!-- Modal content--><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">' + title + '</h4></div><div class="modal-body"><p>' + content + '</p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
-            $(modal).insertAfter('.game');
         };
         return SlotMachine;
     }(objects.Scene));
