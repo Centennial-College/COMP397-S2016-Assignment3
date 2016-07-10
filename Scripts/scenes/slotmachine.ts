@@ -4,7 +4,7 @@
  * @studentID 300867968
  * @date July 10, 2016
  * @description This file is the main game scene for the game
- * @version 0.18.01 - resized and centerd canvas using css
+ * @version 0.18.02 - changed _cashOutButtonClick function to work on all browsers 
  */
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -598,7 +598,12 @@ module scenes {
         private _cashOutButtonClick(event: createjs.MouseEvent): void {
             if (window.confirm("Are you sure you would like to quit the game?")) {
                 window.alert("Thank you for playing Reel of Revolution!");
-                window.close();
+                // window.close(); does not work due to security issues
+                // so just go back to menu instead
+                this._fadeOut(500, function(){
+                    scene = config.Scene.MENU;
+                    changeScene();
+                });
             }
             else {
                 window.alert("Best of Luck Spinning the Reels!");
