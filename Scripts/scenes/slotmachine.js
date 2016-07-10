@@ -4,7 +4,7 @@
  * @studentID 300867968
  * @date July 9, 2016
  * @description This file is the main game scene for the game
- * @version 0.16.02 - added disable cashout button when player has 0 credits
+ * @version 0.17.0 - implemented event handler for the reset button
  */
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -477,6 +477,11 @@ var scenes;
          * @returns {void}
          */
         SlotMachine.prototype._resetButtonClick = function (event) {
+            this._resetPlayerStats();
+            this._resetFruitTally();
+            this._reels.forEach(function (element) {
+                element.image = assets.getResult("Blank");
+            });
         };
         /**
          * This is an event handler for the _cashOutButton's click event.

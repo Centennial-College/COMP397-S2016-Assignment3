@@ -4,7 +4,7 @@
  * @studentID 300867968
  * @date July 9, 2016
  * @description This file is the main game scene for the game
- * @version 0.16.02 - added disable cashout button when player has 0 credits
+ * @version 0.17.0 - implemented event handler for the reset button
  */
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -578,7 +578,11 @@ module scenes {
          * @returns {void}
          */
         private _resetButtonClick(event: createjs.MouseEvent): void {
-
+            this._resetPlayerStats();
+            this._resetFruitTally();
+            this._reels.forEach(element => {
+                element.image = assets.getResult("Blank");
+            });
         }
 
         /**
