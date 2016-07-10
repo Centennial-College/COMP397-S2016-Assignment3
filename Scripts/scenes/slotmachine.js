@@ -4,7 +4,7 @@
  * @studentID 300867968
  * @date July 10, 2016
  * @description This file is the main game scene for the game
- * @version 0.18.03 - changed update method (players should be able to quit/cashout even if 0 credits)
+ * @version 0.18.04 - added _createAndAddModal method and re-worked _resetButtonClick and _cashOutButtonClick methods
  */
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -409,6 +409,34 @@ var scenes;
             if (!this._cashOutButton.mouseEnabled)
                 this._cashOutButton.EnableButton();
         };
+        /**
+         * Utility function that creates a confirm modal and appends it to the document after the
+         * div containing the class="game". modalType = 0 creates a confirmation dialogue box,
+         * modalType = 1 creates a notification dialogue box.
+         *
+         * @private
+         * @method _createAndAddConfirmModal
+         * @param {string} title
+         * @param {string} content
+         * @param {string} elementID
+         * @param {number} modalType
+         * @returns {void}
+         */
+        SlotMachine.prototype._createAndAddModal = function (title, content, elementID, modalType) {
+            var modal = '<!-- Modal --><div id=' + elementID + ' class="modal fade" role="dialog"><div class="modal-dialog"><!-- Modal content--><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">' + title + '</h4></div><div class="modal-body"><p>' + content + '</p></div><div class="modal-footer">';
+            switch (modalType) {
+                // confirmation modal
+                case 0:
+                    modal += '<button type="button" id="yesBtn" class="btn btn-primary" data-dismiss="modal">Yes</button><button type="button" id="noBtn" class="btn btn-danger" data-dismiss="modal">No</button>';
+                    break;
+                // notification modal
+                case 1:
+                    modal += '<button type="button" id="infoBtn" class="btn btn-info" data-dismiss="modal">Ok</button>';
+                    break;
+            }
+            modal += '</div></div></div></div>';
+            $(modal).insertAfter('.game');
+        };
         //EVENT HANDLERS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         /**
          * This is an event handler for the _bet1Button's mouse click event.
@@ -473,35 +501,31 @@ var scenes;
          * @returns {void}
          */
         SlotMachine.prototype._resetButtonClick = function (event) {
-            if (window.confirm("Are you sure you would like to reset the game?")) {
-                this._resetPlayerStats();
-                this._resetFruitTally();
-                this._reels.forEach(function (element) {
-                    element.image = assets.getResult("Blank");
-                });
-            }
+            this._createAndAddModal("Reset Game <i class='fa fa-refresh'></i>", "The game data has been reset.", "resetModal", 1);
+            $('#resetModal').modal('show');
+            this._resetPlayerStats();
+            this._resetFruitTally();
+            this._reels.forEach(function (element) {
+                element.image = assets.getResult("Blank");
+            });
         };
         /**
-         * This is an event handler for the _cashOutButton's click event.
-         *
-         * @private
-         * @method _cashOutButtonClick
-         * @param {createjs.MouseEvent} event
-         * @returns {void}
-         */
+          * This is an event handler for the _cashOutButton's click event.
+          *
+          * @private
+          * @method _cashOutButtonClick
+          * @param {createjs.MouseEvent} event
+          * @returns {void}
+          */
         SlotMachine.prototype._cashOutButtonClick = function (event) {
-            if (window.confirm("Are you sure you would like to quit the game?")) {
-                window.alert("Thank you for playing Reel of Revolution!");
-                // window.close(); does not work due to security issues
-                // so just go back to menu instead
-                this._fadeOut(500, function () {
-                    scene = config.Scene.MENU;
-                    changeScene();
-                });
-            }
-            else {
-                window.alert("Best of Luck Spinning the Reels!");
-            }
+            // create a modal to display confirmation message
+            this._createAndAddModal("Cash Out <i class='fa fa-money'></i>", "Are you sure you would like to quit the game?", "cashOutModal", 0);
+            // attach event listener to the yesBtn
+            $('#yesBtn').on('click', function () {
+                scene = config.Scene.MENU;
+                changeScene();
+            });
+            $('#cashOutModal').modal("show");
         };
         return SlotMachine;
     }(objects.Scene));
