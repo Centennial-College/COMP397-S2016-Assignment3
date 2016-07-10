@@ -4,7 +4,7 @@
  * @studentID 300867968
  * @date July 10, 2016
  * @description This file is the main game scene for the game
- * @version 0.18.03 - changed update method (players should be able to quit/cashout even if 0 credits)
+ * @version 0.18.04 - updated typings from tsd to typings
  */
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -595,14 +595,21 @@ module scenes {
                 window.alert("Thank you for playing Reel of Revolution!");
                 // window.close(); does not work due to security issues
                 // so just go back to menu instead
-                this._fadeOut(500, function(){
+                this._fadeOut(500, function () {
                     scene = config.Scene.MENU;
                     changeScene();
                 });
             }
             else {
                 window.alert("Best of Luck Spinning the Reels!");
+                // this._createAndAddModal("Cash Out", "Are you sure you would like to quit the game?", "cashOutModal");
+                // $('#cashOutModal').modal("show");
             }
+        }
+
+        private _createAndAddModal(title: string, content: string, elementID: string): void {
+            let modal = '<!-- Modal --><div id=' + elementID + ' class="modal fade" role="dialog"><div class="modal-dialog"><!-- Modal content--><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">' + title + '</h4></div><div class="modal-body"><p>' + content + '</p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
+            $(modal).insertAfter('.game');
         }
     }
 }
