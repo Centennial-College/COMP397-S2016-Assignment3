@@ -25,7 +25,6 @@ var config;
         }
         Scene.MENU = 0;
         Scene.SLOT_MACHINE = 1;
-        Scene.GAME_OVER = 2;
         return Scene;
     }());
     config.Scene = Scene;
