@@ -4,7 +4,7 @@
  * @studentID 300867968
  * @date July 9, 2016
  * @description This file is the main game scene for the game
- * @version 0.16.01 - refactored code text is updated only in SlotMachine's update method
+ * @version 0.16.02 - added disable cashout button when player has 0 credits
  */
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -192,11 +192,16 @@ module scenes {
                 this._spinButton.DisableButton();
             }
 
+            // CashOut Button is disabled when the player has no credits remaining
+            if (this._playerMoney == 0) {
+                this._cashOutButton.DisableButton();
+            }
+
             // Update the game labels every tick of the game loop
-              this._jackPotText.text = this._jackpot.toString();
-              this._betText.text = this._playerBet.toString();
-              this._creditsText.text = this._playerMoney.toString();
-              this._resultText.text = this._winnings.toString();
+            this._jackPotText.text = this._jackpot.toString();
+            this._betText.text = this._playerBet.toString();
+            this._creditsText.text = this._playerMoney.toString();
+            this._resultText.text = this._winnings.toString();
         }
 
         // PRIVATE METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -496,6 +501,9 @@ module scenes {
 
             if (!this._spinButton.mouseEnabled)
                 this._spinButton.EnableButton();
+
+            if (!this._cashOutButton.mouseEnabled)
+                this._cashOutButton.EnableButton();
         }
 
         //EVENT HANDLERS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -570,7 +578,7 @@ module scenes {
          * @returns {void}
          */
         private _resetButtonClick(event: createjs.MouseEvent): void {
-            
+
         }
 
         /**

@@ -4,7 +4,7 @@
  * @studentID 300867968
  * @date July 9, 2016
  * @description This file is the main game scene for the game
- * @version 0.16.01 - refactored code text is updated only in SlotMachine's update method
+ * @version 0.16.02 - added disable cashout button when player has 0 credits
  */
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -122,6 +122,10 @@ var scenes;
             // Spin button is diabled until player makes a bet
             if (this._playerBet == 0) {
                 this._spinButton.DisableButton();
+            }
+            // CashOut Button is disabled when the player has no credits remaining
+            if (this._playerMoney == 0) {
+                this._cashOutButton.DisableButton();
             }
             // Update the game labels every tick of the game loop
             this._jackPotText.text = this._jackpot.toString();
@@ -406,6 +410,8 @@ var scenes;
                 this._bet100Button.EnableButton();
             if (!this._spinButton.mouseEnabled)
                 this._spinButton.EnableButton();
+            if (!this._cashOutButton.mouseEnabled)
+                this._cashOutButton.EnableButton();
         };
         //EVENT HANDLERS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         /**
