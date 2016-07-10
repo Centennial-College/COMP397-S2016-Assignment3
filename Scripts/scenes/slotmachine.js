@@ -4,7 +4,7 @@
  * @studentID 300867968
  * @date July 10, 2016
  * @description This file is the main game scene for the game
- * @version 0.18.04 - added _createAndAddModal method and re-worked _resetButtonClick and _cashOutButtonClick methods
+ * @version 0.18.05 - added font awesome to modal headers
  */
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -501,7 +501,7 @@ var scenes;
          * @returns {void}
          */
         SlotMachine.prototype._resetButtonClick = function (event) {
-            this._createAndAddModal("Reset Game <i class='fa fa-refresh'></i>", "The game data has been reset.", "resetModal", 1);
+            this._createAndAddModal("Reset Game <i class='fa fa-refresh fa-spin'></i>", "The game data has been reset.", "resetModal", 1);
             $('#resetModal').modal('show');
             this._resetPlayerStats();
             this._resetFruitTally();
@@ -519,7 +519,7 @@ var scenes;
           */
         SlotMachine.prototype._cashOutButtonClick = function (event) {
             // create a modal to display confirmation message
-            this._createAndAddModal("Cash Out <i class='fa fa-money'></i>", "Are you sure you would like to quit the game?", "cashOutModal", 0);
+            this._createAndAddModal("Cash Out <i class='fa fa-money text-success'></i>", "Are you sure you would like to quit the game?", "cashOutModal", 0);
             // attach event listener to the yesBtn
             $('#yesBtn').on('click', function () {
                 scene = config.Scene.MENU;
