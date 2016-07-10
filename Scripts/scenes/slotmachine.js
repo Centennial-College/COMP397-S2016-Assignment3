@@ -4,7 +4,7 @@
  * @studentID 300867968
  * @date July 9, 2016
  * @description This file is the main game scene for the game
- * @version 0.16.0 - replaced all text-based reel images with graphics
+ * @version 0.16.01 - refactored code text is updated only in SlotMachine's update method
  */
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -123,6 +123,11 @@ var scenes;
             if (this._playerBet == 0) {
                 this._spinButton.DisableButton();
             }
+            // Update the game labels every tick of the game loop
+            this._jackPotText.text = this._jackpot.toString();
+            this._betText.text = this._playerBet.toString();
+            this._creditsText.text = this._playerMoney.toString();
+            this._resultText.text = this._winnings.toString();
         };
         // PRIVATE METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         /**
@@ -316,9 +321,7 @@ var scenes;
                 console.log("There was at least one blank.");
                 console.log("----------------------");
             }
-            this._resultText.text = this._winnings.toString(); //results = winnings
             this._playerMoney += this._winnings; //increment credits
-            this._creditsText.text = this._playerMoney.toString();
             this._resetFruitTally();
         };
         /**
@@ -385,8 +388,6 @@ var scenes;
         SlotMachine.prototype._makeBet = function (playerBet) {
             this._playerBet += playerBet;
             this._playerMoney -= playerBet;
-            this._creditsText.text = this._playerMoney.toString();
-            this._betText.text = this._playerBet.toString();
             console.log('Bet ' + playerBet + ' Credit.');
         };
         /**
@@ -460,7 +461,6 @@ var scenes;
             this._determineWinnings();
             // reset player's bet to zero
             this._playerBet = 0;
-            this._betText.text = this._playerBet.toString();
         };
         /**
          * This is an event handler for the _resetButton's mouse click event.
