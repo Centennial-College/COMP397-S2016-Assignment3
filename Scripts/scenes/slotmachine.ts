@@ -2,9 +2,9 @@
  * @file slotmachine.ts
  * @author Kevin Ma kma45@my.centennialcollge.ca
  * @studentID 300867968
- * @date July 10, 2016
+ * @date July 11, 2016
  * @description This file is the main game scene for the game
- * @version 0.18.06 - added gameOverModal for when the player runs out of credits
+ * @version 0.18.07 - added stacked icons to gameOverModal
  */
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -601,7 +601,7 @@ module scenes {
             // when player has no credits remaining, prompt to quit game or play again
             if (this._playerMoney == 0) {
                 // create a modal to display confirmation message
-                this._createAndAddModal("Game Over <i class='fa fa-money text-success'></i>", "You have  run out of credits.\n\nWould you like to play again?", "gameOverModal", 2);
+                this._createAndAddModal("Game Over <span class='fa-stack fa-lg'><i class='fa fa-gamepad fa-stack-1x'></i><i class='fa fa-ban fa-stack-2x text-danger'></i></span>", "You have  run out of credits.\n\nWould you like to play again?", "gameOverModal", 2);
                 // attach event listener to the quitButton
                 $('#quitButton').on('click', function () {
                     scene = config.Scene.MENU;
