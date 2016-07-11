@@ -19,7 +19,6 @@ var scene;
 // Game Scenes
 var menu;
 var slotmachine;
-var gameover;
 // array of asset objects which contains all assets to be preloaded 
 var assetData = [
     { id: "BackButton", src: "../../Assets/images/BackButton.png" },
@@ -131,13 +130,6 @@ function changeScene() {
             slotmachine = new scenes.SlotMachine();
             currentScene = slotmachine;
             console.log("Starting SLOT_MACHINE Scene");
-            break;
-        case config.Scene.GAME_OVER:
-            // show the GAME_OVER scene
-            stage.removeAllChildren();
-            gameover = new scenes.GameOver();
-            currentScene = gameover;
-            console.log("Starting GAME_OVER Scene");
             break;
     }
     console.log(currentScene.numChildren);

@@ -23,7 +23,6 @@ let scene: number;
 // Game Scenes
 let menu: scenes.Menu;
 let slotmachine: scenes.SlotMachine;
-let gameover: scenes.GameOver;
 
 // array of asset objects which contains all assets to be preloaded 
 let assetData: objects.Asset[] = [
@@ -151,13 +150,6 @@ function changeScene(): void {
             slotmachine = new scenes.SlotMachine();
             currentScene = slotmachine;
             console.log("Starting SLOT_MACHINE Scene");
-            break;
-        case config.Scene.GAME_OVER:
-            // show the GAME_OVER scene
-            stage.removeAllChildren();
-            gameover = new scenes.GameOver();
-            currentScene = gameover;
-            console.log("Starting GAME_OVER Scene");
             break;
     }
 

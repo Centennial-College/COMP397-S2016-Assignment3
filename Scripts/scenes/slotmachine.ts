@@ -4,7 +4,7 @@
  * @studentID 300867968
  * @date July 11, 2016
  * @description This file is the main game scene for the game
- * @version 0.18.07 - added stacked icons to gameOverModal
+ * @version 0.18.07 - added stacked icons to gameOverModal 
  */
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
