@@ -4,7 +4,7 @@
  * @studentID 300867968
  * @date July 10, 2016
  * @description This file is the main game scene for the game
- * @version 0.18.05 - added font awesome to modal headers
+ * @version 0.18.06 - added gameOverModal for when the player runs out of credits
  */
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -413,6 +413,7 @@ var scenes;
          * Utility function that creates a confirm modal and appends it to the document after the
          * div containing the class="game". modalType = 0 creates a confirmation dialogue box,
          * modalType = 1 creates a notification dialogue box.
+         * modalType = 2 creates a gameover modal
          *
          * @private
          * @method _createAndAddConfirmModal
@@ -427,11 +428,15 @@ var scenes;
             switch (modalType) {
                 // confirmation modal
                 case 0:
-                    modal += '<button type="button" id="yesBtn" class="btn btn-primary" data-dismiss="modal">Yes</button><button type="button" id="noBtn" class="btn btn-danger" data-dismiss="modal">No</button>';
+                    modal += '<button type="button" id="yesBtn" class="btn btn-primary btn-block" data-dismiss="modal">Yes</button><button type="button" id="noBtn" class="btn btn-danger btn-block" data-dismiss="modal">No</button>';
                     break;
                 // notification modal
                 case 1:
-                    modal += '<button type="button" id="infoBtn" class="btn btn-info" data-dismiss="modal">Ok</button>';
+                    modal += '<button type="button" id="infoBtn" class="btn btn-info btn-block" data-dismiss="modal">Ok</button>';
+                    break;
+                // gameover modal
+                case 2:
+                    modal += '<button type="button" id="playAgainBtn" class="btn btn-primary" data-dismiss="modal">Play Again</button><button type="button" id="quitButton" class="btn btn-warning" data-dismiss="modal">Quit Game</button>';
                     break;
             }
             modal += '</div></div></div></div>';
@@ -491,6 +496,19 @@ var scenes;
             this._determineWinnings();
             // reset player's bet to zero
             this._playerBet = 0;
+            // when player has no credits remaining, prompt to quit game or play again
+            if (this._playerMoney == 0) {
+                // create a modal to display confirmation message
+                this._createAndAddModal("Game Over <i class='fa fa-money text-success'></i>", "You have  run out of credits.\n\nWould you like to play again?", "gameOverModal", 2);
+                // attach event listener to the quitButton
+                $('#quitButton').on('click', function () {
+                    scene = config.Scene.MENU;
+                    changeScene();
+                });
+                // attach event listener to the playAgainBtn
+                $('#playAgainBtn').on('click', this._resetButtonClick.bind(this));
+                $('#gameOverModal').modal("show");
+            }
         };
         /**
          * This is an event handler for the _resetButton's mouse click event.
@@ -519,12 +537,17 @@ var scenes;
           */
         SlotMachine.prototype._cashOutButtonClick = function (event) {
             // create a modal to display confirmation message
-            this._createAndAddModal("Cash Out <i class='fa fa-money text-success'></i>", "Are you sure you would like to quit the game?", "cashOutModal", 0);
-            // attach event listener to the yesBtn
+            this._createAndAddModal("Cash Out <i class='fa fa-money text-success'></i>", "Are you sure you would like to quit the game with " + this._playerMoney + " credit(s) remaining?", "cashOutModal", 0);
+            // attach event listener to the yesBtn, bind this reference using .bind(this)
+            // window.close() doesn't work on all browsers due to security issues, so 
+            // switch to menu scene instead of closing tab/window
             $('#yesBtn').on('click', function () {
-                scene = config.Scene.MENU;
-                changeScene();
-            });
+                this._fadeOut(500, function () {
+                    // Switch to the MENU Scene
+                    scene = config.Scene.MENU;
+                    changeScene();
+                });
+            }.bind(this));
             $('#cashOutModal').modal("show");
         };
         return SlotMachine;
