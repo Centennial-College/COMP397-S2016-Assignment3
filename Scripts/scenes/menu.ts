@@ -4,7 +4,7 @@
  * @studentID 300867968
  * @date July 9, 2016
  * @description This file is the menu scene for the game.
- * @version 0.15.08 - added comments to menu.ts
+ * @version 1.0.1 - fixed Menu.ts (title label)
  */
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -47,7 +47,7 @@ module scenes {
 
             // add the WELCOME Label to the MENU scene
             this._welcomeLabel = new objects.Label(
-                "SLOT MACHINE",
+                "REEL REVOLUTION",
                 "60px Consolas",
                 "#000",
                 config.Screen.CENTER_X,
@@ -75,7 +75,7 @@ module scenes {
         }
 
         /**
-         * Update game objects in the gameover scene
+         * Update game objects in the menu scene
          * 
          * @public
          * @method update

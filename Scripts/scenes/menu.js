@@ -4,7 +4,7 @@
  * @studentID 300867968
  * @date July 9, 2016
  * @description This file is the menu scene for the game.
- * @version 0.15.08 - added comments to menu.ts
+ * @version 1.0.1 - fixed Menu.ts (title label)
  */
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -45,7 +45,7 @@ var scenes;
          */
         Menu.prototype.start = function () {
             // add the WELCOME Label to the MENU scene
-            this._welcomeLabel = new objects.Label("SLOT MACHINE", "60px Consolas", "#000", config.Screen.CENTER_X, config.Screen.CENTER_Y, true);
+            this._welcomeLabel = new objects.Label("REEL REVOLUTION", "60px Consolas", "#000", config.Screen.CENTER_X, config.Screen.CENTER_Y, true);
             this.addChild(this._welcomeLabel);
             // add the START button to the MENU scene
             this._startButton = new objects.Button("StartButton", config.Screen.CENTER_X, config.Screen.CENTER_Y + 80, true);
@@ -60,7 +60,7 @@ var scenes;
             stage.addChild(this);
         };
         /**
-         * Update game objects in the gameover scene
+         * Update game objects in the menu scene
          *
          * @public
          * @method update
