@@ -23,7 +23,7 @@ module objects {
      * @class Scene
      * @extends {createjs.Container}
      */
-    export class Scene extends createjs.Container {
+    export abstract class Scene extends createjs.Container {
         // PROTECTED INSTANCE VARIABLES ++++++++++++++++++++++++++++++++++++++++
         protected _background: createjs.Bitmap;
 
