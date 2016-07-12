@@ -14,7 +14,6 @@
 /// <reference path="../objects/label.ts" />
 /// <reference path="../objects/button.ts" />
 /// <reference path="../objects/scene.ts" />
-/// <reference path="../scenes/gameover.ts" />
 /// <reference path="../scenes/slotmachine.ts" />
 /// <reference path="../scenes/menu.ts" /> 
 //# sourceMappingURL=_reference.js.map

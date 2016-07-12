@@ -6,10 +6,16 @@
  * @studentID 300867968
  * @date: July 8, 2016
  * @description: This file is the entry point for the game.
- * @version 0.16.0 - replaced all text-based reel images with graphics
+ * @version 0.18.08 - added core namepsace to game.ts
  */
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+/**
+ * This is the generic core namespace
+ * 
+ * @module core
+ */
 
 // Variable Declarations
 // Global Variables
