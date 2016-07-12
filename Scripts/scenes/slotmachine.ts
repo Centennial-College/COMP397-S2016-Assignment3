@@ -4,7 +4,7 @@
  * @studentID 300867968
  * @date July 11, 2016
  * @description This file is the main game scene for the game
- * @version 0.18.07 - added stacked icons to gameOverModal
+ * @version 1.0.0 - initial official release of game 
  */
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -74,6 +74,11 @@ module scenes {
          * @returns {void}
          */
         public start(): void {
+            // The jackpot is set to 5000 by default, progressive increases as 
+            // players play again and again. It is a bait to draw in more idiots to 
+            // yield higher revenue for the casino
+            this._jackpot = 5000;
+
             // Reset the Game to initialize values
             this._resetPlayerStats();
             this._resetFruitTally();
@@ -224,7 +229,6 @@ module scenes {
         private _resetPlayerStats(): void {
             this._playerMoney = 1000;
             this._winnings = 0;
-            this._jackpot = 5000;
             this._playerBet = 0;
         }
 
@@ -395,17 +399,52 @@ module scenes {
                 console.log('Win!');
                 console.log('Won : ' + this._winnings + " Credits");
                 console.log("++++++++++++++++++++++");
-
+                // if player has a winning spin, they have chance to win jackpot as well
+                // even if player doesn't win, every spin contributes to progressive jackpot
+                this._checkJackPot(true);
             }
             else {
                 console.log("----------------------");
                 console.log('Loss!');
                 console.log("There was at least one blank.");
                 console.log("----------------------");
+                this._checkJackPot(false);
             }
 
             this._playerMoney += this._winnings;    //increment credits
             this._resetFruitTally();
+        }
+
+        /**
+         * Utility function to check if the player has won the jackpot, and 
+         * progressively increases the jackpot prize. 
+         * 
+         * @private
+         * @method _checkJackPot
+         * @param {boolean} didPlayerWin
+         * @returns {void}
+         */
+        private _checkJackPot(didPlayerWin: boolean): void {
+            // Compare two random values
+            let jackPotTry: number = Math.floor(Math.random() * 51 + 1);
+            let jackPotWin: number = Math.floor(Math.random() * 51 + 1);
+
+            if (didPlayerWin && (jackPotTry == jackPotWin)) {
+                // display a notification modal to let the player know they won the jackpot prize
+                this._createAndAddModal("JACKPOT! <i class='fa fa-money text-success'></i>", "Congratulations!!!<br/><br/>You have won the jackpot of $" + this._jackpot.toString(), "jackpotModal", 3);
+
+                $('#jackpotModal').modal('show');
+
+                // adds the jackpot prize to player's credits
+                this._playerMoney += this._jackpot;
+
+                // resets the jackpot prize pool
+                this._jackpot = 5000;
+            }
+            else {
+                // increment jackpot (progressive jackpot) if player bet over 100 credits
+                this._jackpot += Math.floor(this._playerBet / 2);
+            }
         }
 
         /**
@@ -516,7 +555,7 @@ module scenes {
          * @returns {void}
          */
         private _createAndAddModal(title: string, content: string, elementID: string, modalType: number): void {
-            let modal = '<!-- Modal --><div id=' + elementID + ' class="modal fade" role="dialog"><div class="modal-dialog"><!-- Modal content--><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">' + title + '</h4></div><div class="modal-body"><p>' + content + '</p></div><div class="modal-footer">';
+            let modal = '<!-- Modal --><div id=' + elementID + ' class="modal fade" role="dialog"><div class="modal-dialog"><!-- Modal content--><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title text-center">' + title + '</h4></div><div class="modal-body"><p class="text-center">' + content + '</p></div><div class="modal-footer">';
             switch (modalType) {
                 // confirmation modal
                 case 0:
@@ -529,6 +568,10 @@ module scenes {
                 // gameover modal
                 case 2:
                     modal += '<button type="button" id="playAgainBtn" class="btn btn-primary" data-dismiss="modal">Play Again</button><button type="button" id="quitButton" class="btn btn-warning" data-dismiss="modal">Quit Game</button>';
+                    break;
+                // congratulatory modal
+                case 3:
+                    modal += '<button type="button" id="infoBtn" class="btn btn-success btn-block" data-dismiss="modal">Enjoy!</button>'
                     break;
             }
 
@@ -622,7 +665,7 @@ module scenes {
          * @returns {void}
          */
         private _resetButtonClick(event: createjs.MouseEvent): void {
-            this._createAndAddModal("Reset Game <i class='fa fa-refresh fa-spin'></i>", "The game data has been reset.", "resetModal", 1);
+            this._createAndAddModal("Reset Game <i class='fa fa-refresh fa-spin'></i>", "The player data has been reset.", "resetModal", 1);
             $('#resetModal').modal('show');
             this._resetPlayerStats();
             this._resetFruitTally();
@@ -641,7 +684,7 @@ module scenes {
           */
         private _cashOutButtonClick(event: createjs.MouseEvent): void {
             // create a modal to display confirmation message
-            this._createAndAddModal("Cash Out <i class='fa fa-money text-success'></i>", "Are you sure you would like to quit the game with " + this._playerMoney + " credit(s) remaining?", "cashOutModal", 0);
+            this._createAndAddModal("Cash Out <i class='fa fa-usd text-success'></i>", "Are you sure you would like to quit the game with " + this._playerMoney + " credit(s) remaining?", "cashOutModal", 0);
 
             // attach event listener to the yesBtn, bind this reference using .bind(this)
             // window.close() doesn't work on all browsers due to security issues, so 
